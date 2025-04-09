@@ -2,6 +2,12 @@ function Show-MissingBinaryMessage {
     <#
     .DESCRIPTION
         Displays a message to the user to explaining the module's binary requirements.
+
+    .OUTPUTS
+        None.
+
+    .EXAMPLE
+        Show-MissingBinaryMessage
     #>
     [OutputType([void])]
     [CmdletBinding()]
@@ -36,15 +42,11 @@ function Show-MissingBinaryMessage {
 
                 'When installing AtomicParsley using Homebrew or Chocolatey the AtomicParsley path',
                 'will automatically be added to the operating system PATH environment variable.',
-                'If AtomicParsley was installed manually you can either:',
-                ' - Add the AtomicParsley path to your your system PATH environment variable.',
-                ' - Specify the AtomicParsley path in your PowerShell script using the',
-                '   PS_ATOMIC_PARSLEY_PATH environment variable. For example:',
-                '     - $env:PS_ATOMIC_PARSLEY_PATH = "C:\Program Files\AtomicParsley\atomicparsley.exe"',
-                '     - $env:PS_ATOMIC_PARSLEY_PATH = "/usr/local/bin/atomicparsley"','',
+                'If AtomicParsley was installed manually you must add the path to the system',
+                'PATH environment variable for the module to work.','',
 
                 'Please note that this module is only tested against AtomicParsley release version',
-                $('"{0}"' -f $PS_ATOMIC_PARSLEY_VERSION),'',
+                $('"{0}"' -f $AP_VERSION),'',
 
                 'For additional information see https://github.com/seabopo/PowerShell-AtomicParsley',''
 

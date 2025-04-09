@@ -10,15 +10,11 @@
 
 $ErrorActionPreference = "Stop"
 
-Set-Variable -Scope 'Local' -Name "PS_MODULE_ROOT" -Value $PSScriptRoot
-Set-Variable -Scope 'Local' -Name "PS_MODULE_NAME" -Value $($PSScriptRoot | Split-Path -Leaf)
+Set-Variable -Scope 'Script' -Name "PS_MODULE_ROOT" -Value $PSScriptRoot
+Set-Variable -Scope 'Script' -Name "PS_MODULE_NAME" -Value $($PSScriptRoot | Split-Path -Leaf)
 
-Set-Variable -Scope 'Local' -Name "PS_ATOMIC_PARSLEY_INSTALLED"    -Value $false
-Set-Variable -Scope 'Local' -Name "PS_ATOMIC_PARSLEY_VERSION"      -Value '20240608.083822.1ed9031'
-Set-Variable -Scope 'Local' -Name "PS_ATOMIC_PARSLEY_DEFAULT_PATH" -Value $('AtomicParsley')
-
-#Set-Variable -Scope 'Local' -Name "PS_ATOMIC_PARSLEY_DEFAULT_PATH" -Value $('{0}/bin/AtomicParsley' -f $PS_MODULE_ROOT)
-#if ( $isWindows ) { $PS_ATOMIC_PARSLEY_DEFAULT_PATH += '.exe' }
+Set-Variable -Scope 'Script' -Name "AP_INSTALLED"    -Value $false
+Set-Variable -Scope 'Script' -Name "AP_VERSION"      -Value '20240608.083822.1ed9031'
 
 if ( $null -eq $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES ) {
     $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $false

@@ -1,4 +1,5 @@
 # AtomicParsley PowerShell Module
+
 ## Description
 This module is an interface to the AtomicParsley command-line tool created by Wez Furlong. This open source
 project is available on Github (https://github.com/wez/atomicparsley) under the GPL-2.0 License. 
@@ -22,7 +23,8 @@ On Windows, the AtomicParsley binary can be installed using Chocolatey with the 
 
 Chocolatey installation documentation can be found here: https://chocolatey.org/install
 
-Windows systems also need the (Visual C++ Redistributable for Visual Studio 2015)[https://www.microsoft.com/en-us/download/details.aspx?id=48145] installed.
+Windows systems also need the [Visual C++ Redistributable for Visual Studio 2015](
+  https://www.microsoft.com/en-us/download/details.aspx?id=48145) installed.
 
 Users of all operating systems can download the latest version from the releases page of the project site: 
 
@@ -30,14 +32,21 @@ Users of all operating systems can download the latest version from the releases
 
 When installing AtomicParsley using Homebrew or Chocolatey, the AtomicParsley path will automatically be added to 
 the operating system PATH environment variable so the tool can be run using the terminal or command-prompt from 
-any location on the system. If AtomicParsley was installed manually, you must do one of the following for the
-PowerShell module to function:
- - Add the AtomicParsley path to your your system PATH environment variable',
- - Specify the AtomicParsley path in your PowerShell script using the',
-   PS_ATOMIC_PARSLEY_PATH environment variable. For example:',
-     - $env:PS_ATOMIC_PARSLEY_PATH = "C:\Program Files\AtomicParsley\atomicparsley.exe"',
-     - $env:PS_ATOMIC_PARSLEY_PATH = "/usr/local/bin/atomicparsley"',
+any location on the system. If AtomicParsley was installed manually you will need to update your operating system
+environment path to include the AtomicParsley path for the module to function.
 
+## File Permissions on MacOS
+
+MacOS has 'Special Folders' like Downloads, Desktop, and Movies in the user's personal folder that require 
+additional permissions to be granted for applications to access their content. If your video files are located 
+in the 'Movies' folder under your user profile, AtomicParsley  and PowerShell must be granted access to the folder. 
+You can do this by adding the applications to the list of allowed applications in 
+System Settings > Privacy and Security > Media & Apple Music.
+
+If you use Apple's "TV" app, it will create a folder under the Movies folder by default at /Users/Username/Movies/TV
+and store all of it's media there. The "TV" folder has it's own set of special permissions, and the files in that 
+folder won't be accessible by apps even after enabling the additional permissions via the "Media & Apple Music"
+setting. 
 
 ## AtomicParsley Project Information
 
@@ -46,58 +55,70 @@ https://github.com/wez/atomicparsley
 https://sourceforge.net/projects/atomicparsley/files/
 
 ### AtomicParsley DOCUMENTATION
-Current: https://github.com/wez/atomicparsley
+Current: https://github.com/wez/atomicparsley  
 Older:   http://atomicparsley.sourceforge.net/
 
 ### Atom Definitions
-https://code.google.com/p/mp4v2/wiki/iTunesMetadata
-https://developer.apple.com/library/mac/documentation/QuickTime/qtff/QTFFChap2/qtff2.html
+[Apple Developer Documentation](
+  https://developer.apple.com/library/mac/documentation/QuickTime/qtff/QTFFChap2/qtff2.html)
 
 ### AtomicParsley Version Information
---------------  ------  ----------  --  ----  --  -----------------------------------------------------------------
+```
+--------------  ------  ----------  --  ----  --  -----------------------------------
 Version         Size    Build Date  HD  rDNS  CR  Notes
---------------  ------  ----------  --  ----  --  -----------------------------------------------------------------
+--------------  ------  ----------  --  ----  --  -----------------------------------
 MetaX           160 KB  2/27/2010   N    Y?
 0.9.3 (Wez)     578 KB  7/10/2010   Y?   Y?   Y?  May Remove TV Ratings
 0.9.4 (Wez)     412 KB  10/16/2011  Y?   Y?   Y?  Adds --Rating
 0.9.4 (HG)      438 KB  6/23/2011   Y?   Y?   Y?  Adds --lyricsFile, --Rating, --geID, --xID
 0.9.4 (HG 095)  457 KB  11/7/2011   Y?   Y?   Y?
 0.9.4 (HG 103)  462 KB  12/9/2012   Y?   Y?   Y?
-0.9.6 (HG 109)  365 KB  6/27/2014   Y?   Y?   Y?  Fixes Movie/Short Type. Does everything but 1080p Atom Value of 2
+0.9.6 (HG 109)  365 KB  6/27/2014   Y?   Y?   Y?  Fixes Movie/Short Type. Does 
+                                                  everything but 1080p Atom Value of 2
 
-My Version      469 KB  7/13/2014   +/-  Y   +/-  Forked, Does Everything: Remove All, 1080p HD, rDNS Atoms, and
-                                                  uses the --Rating parameter to add the Content Rating instead of
+My Version      469 KB  7/13/2014   +/-  Y   +/-  Forked, Does Everything: 
+                                                  Remove All, 1080p HD, rDNS Atoms, 
+                                                  uses the --Rating parameter to add 
+                                                  the Content Rating instead of
                                                   using the rDNS atom method.
-                                                  Must re-add to iTunes to see ATOM removal.
+                                                  Must re-add to iTunes to see 
+                                                  ATOM removal.
 
  ?   = partial functionality (may only add or delete)
-HD   = Includes the --hdvideo paramater. Only sets SD/HD (boolean value) unless noted.
-CR   = Includes the --Rating paramater, to add the Content Rating atom, which adds TV/Movie ratings without having 
-       to use the rDNS method.
+HD   = Includes the --hdvideo parameter. Only sets SD/HD (boolean value) unless noted.
+CR   = Includes the --Rating parameter, to add the Content Rating atom, which adds 
+       TV/Movie ratings without having to use the rDNS method.
 rDNS = Supports adding custom atoms not specified by command-line parameters.
+```
 
 ## AtomicParsley Examples
 
 ### Command Line Examples
-
+```
 AtomicParsley.exe "E:\Star Trek.mp4" --metaEnema --overWrite
 
-AtomicParsley.exe   "E:\Star Trek.mp4" --stik "Short Film" --title "Star Trek" --sortOrder name "Star Trek"
-                    --TVShowName "Star Trek" --TVSeasonNum "1" --TVEpisodeNum "1" --TVEpisode "1x01" --TVNetwork ""
-                    --description "The fate of the galaxy rests in the hands of bitter rivals. One, James Kirk,"
-                    --longdesc "The fate of the galaxy rests in the hands of bitter rivals. One, James Kirk, "
-                    --year "2009-12-12T01:00:00Z" --artist "Chris Pine as Kirk, Zachary Quinto as Spock."
-                    --albumArtist "" --composer "J.J. Abrams" --genre "Action | Adventure | Science Fiction"
-                    --category "Action | Adventure | Science Fiction" --encodingTool "Lavf53.31.100"
-                    --comment "Video: 720x480 4:3 29.970 fps 3 283 Kbps AVC Main@L3.1, Audio: 2 channels 61.4 Kbps 48.0 KHz AAC"
-                    --podcastURL "http://www.imdb.com/title/tt0796366/"
-                    --cnID 0796366
-                    --rDNSatom "<?xml version='1.0' encoding='UTF-8'?> <!DOCTYPE plist PUBLIC '-//Apple//DTD PLIST 1.0//EN' 'http://www.apple.com/DTDs/PropertyList-1.0.dtd'><plist version='1.0'><dict>  <key>cast</key>  <array>  <dict><key>name</key><string>Chris Pine as Kirk</string></dict>  <dict><key>name</key><string>Zachary Quinto as Spock.</string></dict>  </array>  <key>directors</key>  <array>  <dict><key>name</key><string>J.J. Abrams</string></dict>  </array>  <key>screenwriters</key>  <array>  <dict><key>name</key><string>J.J. Abrams</string></dict>  </array>  <key>studio</key><string>Paramount Pictures | Bad Robot | Spyglass Entertainment | MavroCine Pictures GmbH & Co. KG</string></dict></plist>" name=iTunMOVI domain=com.apple.iTunes
-                    --rDNSatom "mpaa|PG-13|300|No Idea" name=iTunEXTC domain=com.apple.iTunes
-                    --artwork REMOVE_ALL --artwork "C:\Users\Sean\AppData\Local\Temp\PorpoiseHork\Star Trek (2009) Cover Art 1.jpg"
+    AtomicParsley.exe "E:\Star Trek.mp4" --stik "Short Film" --title "Star Trek" 
+                      --sortOrder name "Star Trek" --TVShowName "Star Trek" 
+                      --TVSeasonNum "1" --TVEpisodeNum "1" --TVEpisode "1x01" 
+                      --TVNetwork ""
+                      --description "The fate of the galaxy rests in the hands of bitter rivals."
+                      --longdesc "The fate of the galaxy rests in the hands of bitter rivals."
+                      --year "2009-12-12T01:00:00Z" 
+                      --artist "Chris Pine as Kirk, Zachary Quinto as Spock."
+                      --albumArtist "" --composer "J.J. Abrams" 
+                      --genre "Action | Adventure | Science Fiction"
+                      --category "Action | Adventure | Science Fiction" 
+                      --encodingTool "Lavf53.31.100"
+                      --comment "720x480 29.970 fps 2 channels 61.4 Kbps 48.0 KHz AAC"
+                      --podcastURL "http://www.imdb.com/title/tt0796366/"
+                      --cnID 0796366
+                      --rDNSatom "mpaa|PG-13|300|No Idea" name=iTunEXTC domain=com.apple.iTunes
+                      --rDNSatom "<?xml version='1.0' encoding='UTF-8'?> <!DOCTYPE plist PUBLIC '-//Apple//DTD PLIST 1.0//EN' 'http://www.apple.com/DTDs/PropertyList-1.0.dtd'><plist version='1.0'><dict>  <key>cast</key>  <array>  <dict><key>name</key><string>Chris Pine as Kirk</string></dict>  <dict><key>name</key><string>Zachary Quinto as Spock.</string></dict>  </array>  <key>directors</key>  <array>  <dict><key>name</key><string>J.J. Abrams</string></dict>  </array>  <key>screenwriters</key>  <array>  <dict><key>name</key><string>J.J. Abrams</string></dict>  </array>  <key>studio</key><string>Paramount Pictures | Bad Robot | Spyglass Entertainment | MavroCine Pictures GmbH & Co. KG</string></dict></plist>" name=iTunMOVI domain=com.apple.iTunes
+                      --artwork REMOVE_ALL --artwork "C:\Users\Sean\AppData\Local\Temp\PorpoiseHork\Star Trek (2009) Cover Art 1.jpg"
+```
 
 ### Standard iTunes Metadata
-
+```
 Width:1920 | Height:1078 | DisplaySize:1919x1078 | AspectRatio:16:9 | FrameRate:23.976 | FrameCount:150286 |
 VideoBitRate:4982050 | VideoFormat:AVC | Duration:104 | FormatProfile:High@L4.0 | EncodedSettings: |
 Summary:
@@ -232,9 +253,10 @@ Atom "----" [com.apple.iTunes;iTunMOVI] contains: <?xml version="1.0" encoding="
 
 Atom "©cmt" contains: 1080p WS iTunes HD DD
 Atom "covr" contains: 1 piece of artwork
+```
 
 ## AtomicParsley Full Command-Line Help
-
+```
 AtomicParsley help page for setting iTunes-style metadata into MPEG-4 files.
               (3gp help available with AtomicParsley --3gp-help)
           (ISO copyright help available with AtomicParsley --ISO-help)
@@ -808,3 +830,4 @@ Note: (foo) denotes required arguments; [foo] denotes optional parameters
  --ID3Tag MCDI D
        Information to create this frame is taken directly off an Audio CD's TOC. The letter after
        "MCDI" is the letter of the drive where the CD is present.
+```
