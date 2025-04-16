@@ -38,7 +38,7 @@ function New-AtomicParsleyAtomCollection {
     )
 
     begin {
-        [Hashtable] $AtomCollection = @{ RawAtomData = ""; UnknownAtoms = "" }
+        [Hashtable] $AtomCollection = @{ RawAtomData = "" }
     }
 
     process {
@@ -50,17 +50,12 @@ function New-AtomicParsleyAtomCollection {
                 $AtomCollection.RawAtomData += ("{0}`r`n" -f $AtomData)
 
                 $AtomID,$AtomValue = $AtomData | ConvertFrom-AtomicParsleyAtomData
-                $AtomName = $AtomID | Find-AtomNameFromID
+                $AtomName = $( $AtomID | Find-AtomNameFromID ) ?? $AtomID
 
-                if ( [string]::IsNullOrEmpty($AtomName) ) {
-                    $AtomCollection.UnknownAtoms += ("{0} :: {1}`r`n" -f $AtomID,$AtomValue)
+                if ( -not $AtomCollection.ContainsKey($AtomName) ) {
+                    $AtomCollection.Add( $AtomName, $AtomValue )
                 }
-                else {
-                    if ( -not $AtomCollection.ContainsKey($AtomName) ) {
-                        $AtomCollection.Add( $AtomName, $AtomValue )
-                    }
-                }
-
+                
             }
 
         }

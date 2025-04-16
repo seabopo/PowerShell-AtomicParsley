@@ -10,11 +10,13 @@
 
 $ErrorActionPreference = "Stop"
 
-Set-Variable -Scope 'Script' -Name "PS_MODULE_ROOT" -Value $PSScriptRoot
-Set-Variable -Scope 'Script' -Name "PS_MODULE_NAME" -Value $($PSScriptRoot | Split-Path -Leaf)
+Set-Variable -Scope 'Script' -Name "PS_MODULE_ROOT"  -Value $PSScriptRoot
+Set-Variable -Scope 'Script' -Name "PS_MODULE_NAME"  -Value $($PSScriptRoot | Split-Path -Leaf)
 
 Set-Variable -Scope 'Script' -Name "AP_INSTALLED"    -Value $false
 Set-Variable -Scope 'Script' -Name "AP_VERSION"      -Value '20240608.083822.1ed9031'
+Set-Variable -Scope 'Script' -Name "AP_ATOMS"        -Value $null
+Set-Variable -Scope 'Script' -Name "AP_ATOMS_PATH"   -Value $(Join-Path -Path $PSScriptRoot -ChildPath 'atoms.csv')
 
 if ( $null -eq $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES ) {
     $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $false
@@ -52,3 +54,10 @@ $privateFunctionsRootFolders | ForEach-Object {
 if ( -not $( Test-AtomicParsleyBinaryExists ) ) {
     Show-MissingBinaryMessage
 }
+
+#==================================================================================================================
+# Load the List of Atomic Parsley Known Atoms
+#==================================================================================================================
+
+$Script:AP_ATOMS = Import-Csv -Path $Script:AP_ATOMS_PATH -Delimiter ',' #-Encoding 'UTF8'
+

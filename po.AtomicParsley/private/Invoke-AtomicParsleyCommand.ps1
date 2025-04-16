@@ -6,7 +6,7 @@ function Invoke-AtomicParsleyCommand {
     .OUTPUTS
         A string array containing the results of the command.
 
-    .PARAMETER FilePath
+    .PARAMETER File
         REQUIRED. String. Alias: -p. The fully-qualified file path of a file with to read or write iTunes metadata.
 
     .PARAMETER Command
@@ -15,11 +15,11 @@ function Invoke-AtomicParsleyCommand {
 
     .PARAMETER SaveToFile
         OPTIONAL. Switch. Alias: -s. Saves the results of the command text file. The file will be located in the
-        same directory as the file specified in the FilePath parameter and will have the same name with a
+        same directory as the file specified in the File parameter and will have the same name with a
         '.txt' file extension.
 
     .EXAMPLE
-        Invoke-AtomicParsleyCommand -FilePath 'C:\myfile.mp4' -Command '--textdata' -SaveToFile
+        Invoke-AtomicParsleyCommand -File 'C:\myfile.mp4' -Command '--textdata' -SaveToFile
 
     .EXAMPLE
         Invoke-AtomicParsleyCommand -p 'C:\myfile.mp4' -c '--textdata' -s
@@ -30,7 +30,7 @@ function Invoke-AtomicParsleyCommand {
     [OutputType([string[]])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('p')] [string] $FilePath,
+        [parameter(Mandatory, ValueFromPipeline)] [Alias('f')] [string] $File,
         [parameter()]                             [Alias('c')] [string] $Command = '--textdata',
         [parameter()]                             [Alias('s')] [switch] $SaveToFile
     )
@@ -39,30 +39,28 @@ function Invoke-AtomicParsleyCommand {
 
         if ( $SCRIPT:AP_INSTALLED ) {
 
-            if ( Test-Path -LiteralPath $FilePath -ErrorAction Ignore ) {
+            if ( Test-Path -LiteralPath $File -ErrorAction Ignore ) {
 
                 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-                $cmd = $( "AtomicParsley `"{0}`" {1}" -f $FilePath, $Command )
+                $cmd = $( "AtomicParsley `"{0}`" {1}" -f $File, $Command )
 
                 $atoms = Invoke-Cmd -c $cmd -r 0
 
                 if ( -not $atoms.success ) { Throw $atoms.message }
 
-                if ( $SaveToFile ) { $output | Out-File -LiteralPath "FileSystem::$FilePath.txt" }
+                if ( $SaveToFile ) { $atoms.value | Out-File -LiteralPath "FileSystem::$File.txt" }
 
                 $cleanAtoms = $atoms.value | Where-Object { $_ -ne "" }
 
             }
             else {
-                Throw $('The specified file was not found: {0}' -f $FilePath)
-                #Write-Msg -e -m 'iTunes data cannot be read or written. The specified file was not found.'
-                #Write-Msg -e -il 1 -m $('File Path: {0}', $FilePath)
+                Throw $('The specified file was not found: {0}' -f $File)
             }
+            
         }
         else {
             Throw 'iTunes data cannot be read or written. AtomicParsley was not found.'
-            #Write-Msg -e -m 'iTunes data cannot be read or written. AtomicParsley was not found.'
         }
 
         return $cleanAtoms

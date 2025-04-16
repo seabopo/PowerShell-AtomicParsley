@@ -23,7 +23,7 @@ function Read-AtomicParsleyAtoms {
     [OutputType([Hashtable])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory, ValueFromPipeline)] [Alias('p')] [String] $FilePath,
+        [Parameter(Mandatory, ValueFromPipeline)] [Alias('f')] [String] $File,
         [Parameter()]                             [Alias('s')] [Switch] $SaveToFile
     )
 
@@ -31,7 +31,7 @@ function Read-AtomicParsleyAtoms {
 
         try {
 
-            $FilePath |
+            $File |
                 Invoke-AtomicParsleyCommand -Command '--textdata' -SaveToFile:$SaveToFile |
                     New-AtomicParsleyAtomCollection
 

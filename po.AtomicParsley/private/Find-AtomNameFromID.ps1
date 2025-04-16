@@ -23,15 +23,11 @@ function Find-AtomNameFromID {
         [parameter(Mandatory, ValueFromPipeline)] [Alias('i')] [string] $AtomID
     )
 
-    begin {
-        [PSCustomObject] $XrefList = Import-AtomicParsleyAtomList
-    }
-
     process {
 
-        $XrefList.GetEnumerator() |
-            Where-Object { $_.value.ID.endsWith($AtomID) } |
-                Select-Object -ExpandProperty 'Key'
+        $Script:AP_ATOMS |
+            Where-Object { $_.AtomID.endsWith($AtomID) } |
+                Select-Object -ExpandProperty 'PropertyName'
 
         return
 

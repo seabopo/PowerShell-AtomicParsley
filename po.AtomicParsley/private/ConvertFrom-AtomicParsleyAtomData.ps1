@@ -19,6 +19,9 @@ function ConvertFrom-AtomicParsleyAtomData {
 
     .EXAMPLE
         ConvertFrom-AtomicParsleyAtomData -AtomData 'Atom "©nam" contains: The Dead Don't Die'
+
+    .NOTES
+        Atom names come in two formats: "©day" and "---- [com.apple.iTunes;iTunEXTC]".
     #>
     [OutputType([string],[string])]
     [CmdletBinding()]
@@ -27,7 +30,7 @@ function ConvertFrom-AtomicParsleyAtomData {
     )
 
     begin {
-        $atomDomains = @( '---- [com.apple.iTunes;iTun', '---- [org.themoviedb;', '---- [com.thetvdb;', ']')
+        $knownRdnsAtoms = @( 'com.apple.iTunes;iTunEXTC'; 'com.apple.iTunes;iTunMOVI' )
     }
 
     process {
@@ -36,7 +39,16 @@ function ConvertFrom-AtomicParsleyAtomData {
 
             $id,$value = $( ( $AtomData.Replace('"','').Substring(5).Trim() ) -Split " contains: " )
 
-            $atomDomains | ForEach-Object { $id = $id.Replace($_,'') }
+            if ( $id.StartsWith('---- [') ) {
+                $id = $id.Substring(6,$id.length - 7)
+            }
+
+            if  ( $knownRdnsAtoms -contains $id ) {
+                $id = $id.Split(';')[1]
+                if ( $id -eq 'iTunEXTC' ) {
+                    $association, $value, $code, $unused = $Value.Split('|')
+                }
+            }
 
             if ( -not [String]::IsNullOrEmpty($value) ) {
                 if ( $value.StartsWith("'") -and $value.EndsWith("'") ) {
@@ -45,7 +57,6 @@ function ConvertFrom-AtomicParsleyAtomData {
                 $value = $value.Trim()
             }
 
-            if ( $id -eq 'EXTC' ) { $association, $value, $code, $unused = $Value.Split('|') }
         }
 
         return $id,$value
