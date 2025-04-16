@@ -318,8 +318,8 @@ For example:
 $env:PS_AtomicParsley_DefaultDomain = 'com.me'
 
 $atoms = @{
-    'TMdbID:org.themoviedb' = 862
-    'TVdbID:com.thetvdb' = 318
+    'org.themoviedb;TMdbID' = 862
+    'com.thetvdb;TVdbID' = 318
     MyProperty = 'Test Me'
 }
 
@@ -329,17 +329,17 @@ Write-AtomicParsleyAtoms -File './Movie (1080p HD).m4v' -Atoms $atoms
 even though the 'com.me' domain is set in the file:
 ```
 $atoms = @{
-    'TMdbID:org.themoviedb' = 862
-    'TVdbID:com.thetvdb' = 318
+    'org.themoviedb;TMdbID' = 862
+    'com.thetvdb;TVdbID' = 318
     MyProperty = 'Test Me'
 }
 ```
 
 To access properties that include a domain use single or double quotes:
 ```
-$value = $atoms.'TMdbID:org.themoviedb'
+$value = $atoms.'org.themoviedb;TMdbID'
 or
-$atoms."TMdbID:org.themoviedb" = 862
+$atoms."org.themoviedb;TMdbID" = 862
 ```
 
 Custom properties whose domain matches the default custom domain will 
