@@ -93,7 +93,7 @@ genre                -g, --genre                ©gen        string      User de
 iTunesGenre              --geID                 geID        number      Ex: 4000. See AtomicParsleyHelp.txt.
 releaseDate          -y, --year                 ©day        datetime    UTC Date Format: 1989-04-14T07:00:00Z
 contentRating            --contentRating        iTunEXTC    string      G, PG, TV-PG. See AtomicParsleyHelp.txt.
-movi                                            iTunMOVI    string      The list of actors, directors, etc. 
+iTunesMovie                                     iTunMOVI    string      The list of actors, directors, etc. 
                                                                         This is an XML document.
                                                                                                                    
 tvShowName           -H, --TVShowName           tvsh        string      The TV Show/Series name.
@@ -168,7 +168,7 @@ Unknown2                                        plID        number
 
 ```
 
-## Using the 'movi' Property / iTunMOVI Atom
+## Using the 'iTunesMovie' Property / iTunMOVI Atom
 
 Most atoms in a media file are simple text or numbers. The "iTunMOVI" 
 atom is a complex field that contains several lists of movie credit metadata 
@@ -210,46 +210,45 @@ Atom "----" [com.apple.iTunes;iTunMOVI] contains: <?xml version="1.0" encoding="
 
 When retrieving metadata from a file that contains the iTunMOVI atom, 
 the raw data (both text and formatting) are stored in the result 
-object's 'movi' property. The result object will also contain additional
-properties, each prefixed with the 'movi' atom name, for each type of
-list included in the 'movi' atom raw data. 
+object's 'iTunesMovie' property. The result object will also contain 
+additional properties, each prefixed with 'iTunesMovie', for each 
+type of list included in the 'iTunMOVI' atom. 
 
 For the example iTunMOVI atom data above, the object that is returned 
 would look like this:
 ```
 $atoms = @{
-    movi              = "<?xml version="1.0" encoding="UTF-8" standalone="no"?> ..."
-    moviStudio        = "Studio Name"
-    moviCast          = @('Tom Hanks:2672649','Tim Allen:187699022','Don Rickles:3625072')
-    moviDirectors     = @('John Lasseter:188703870')
-    moviCoDirectors   = @()
-    moviProducers     = @()
-    moviScreenWriters = @()
+    iTunesMovie              = "<?xml version="1.0" encoding="UTF-8" standalone="no"?> ..."
+    iTunesMovieStudio        = "Studio Name"
+    iTunesMovieCast          = @('Tom Hanks:2672649','Tim Allen:187699022','Don Rickles:3625072')
+    iTunesMovieDirectors     = @('John Lasseter:188703870')
+    iTunesMovieCoDirectors   = @()
+    iTunesMovieProducers     = @()
+    iTunesMovieScreenWriters = @()
 }
 ```
 ... where each entry in the list contains a name (Tom Hanks) and the 
 ID (2672649) used by the iTunes store to identify that artist.
 
-When writing metadata to a file you can include the individual 'movi' 
-properties that represent the credit lists (moviCast, moviDirectors, etc.) 
-to automatically generate the correct XML metadata for the iTunMOVI atom 
-('movi' property).
+When writing metadata to a file you can include the individual 'iTunesMovie' 
+properties that represent the credit lists (iTunesMovie, iTunesMovie, etc.) 
+to automatically generate the correct XML metadata for the iTunMOVI atom.
 
 ```
 $atoms = @{
-    moviStudio        = "Studio Name"
-    moviCast          = @('Tom Hanks','Tim Allen','Don Rickles')
-    moviDirectors     = @('John Lasseter')
-    moviCoDirectors   = @()
-    moviProducers     = @()
-    moviScreenWriters = @()
+    iTunesMovieStudio        = "Studio Name"
+    iTunesMovieCast          = @('Tom Hanks','Tim Allen','Don Rickles')
+    iTunesMovieDirectors     = @('John Lasseter')
+    iTunesMovieCoDirectors   = @()
+    iTunesMovieProducers     = @()
+    iTunesMovieScreenWriters = @()
 }
 ```
 Note that the iTunes Store artist ID is not required to generate the iTunMOVI atom.
 
-If you include a 'movi' property in your object when writing data to a file, 
-that property value will be written EXACTLY as defined in the property, and 
-will not be auto-generated even if other 'movi' properties exist in the object.
+If you include the 'iTunesMovie' property in your object when writing data to 
+a file, that property value will be written EXACTLY as defined in the property, and 
+will not be auto-generated even if other 'iTunesMovie' properties exist in the object.
 
 ## Reading and Writing Metadata to Custom Atoms
 AtomicParsley supports writing both standard and reverse DNS format atom metadata. 
@@ -265,37 +264,30 @@ Reverse DNS atoms are different from normal atoms in that they require an
 additional piece of data data to configure. Instead of the normal 'name' 
 and 'value' properties, they require a 'name', a 'value' and a 'domain'. 
 
-For example, the "iTunMOVI" atom references above is actually a reverse
+For example, the "iTunMOVI" atom referenced above is actually a reverse
 DNS atom. You could choose to ignore the PowerShell module's built-in 
 handling of that property and write it as a custom atom instead like this:
 ```
 $atoms = @{
-    iTunMOVI = "<?xml version="1.0" encoding="UTF-8" standalone="no"?> ..."
+    "com.apple.iTunes;iTunMOVI" = "<?xml version="1.0" encoding="UTF-8" standalone="no"?> ..."
 }
 
-Write-AtomicParsleyAtoms -File './Movie (1080p HD).m4v' -Atoms $atoms -Domain 'com.apple.iTunes'
+Write-AtomicParsleyAtoms -File './Movie (1080p HD).m4v' -Atoms $atoms
 ```
+... where the property name is in the format 'domain;PropertyName'.
 
-... which would update only the iTunMOVI atom on the file and set the domain 
-of any custom atoms to 'com.apple.iTunes'.
-
-If you want to add multiple custom atoms and domains to a to a file, you can
-do so by specifying a custom domain as part of the property name in the 
-format 'domain;PropertyName'. 
-
-For example:
+You can also use a simple property name (without the domain) and set
+the domain as a parameter, like this:
 ```
 $atoms = @{
     iTunMOVI = "<?xml version="1.0" encoding="UTF-8" standalone="no"?> ..."
-    'org.themoviedb;TMdbID' = 862
-    'com.thetvdb;TVdbID' = 318
 }
 
 Write-AtomicParsleyAtoms -File './Movie (1080p HD).m4v' -Atoms $atoms -Domain 'com.apple.iTunes'
 ```
-... would use the domains specified in the 'TMdbID' and 'TVdbID' properties, 
-and would use the 'com.apple.iTunes' domain for the 'iTunMOVI' property since
-it did not define a domain.
+... which would set all custom properties/atoms that do not have a 
+domain specified as part of the property name to the name specified
+in the parameter.
 
 If you specify custom properties but do not specify a domain in either the 
 property name or the Write-AtomicParsleyAtoms function:
@@ -311,11 +303,15 @@ Write-AtomicParsleyAtoms -File './Movie (1080p HD).m4v' -Atoms $atoms
 
 ... a default domain will be used. The value of the default domain is defined
 by the environment variable PS_AtomicParsley_DefaultDomain. If that value
-is not defined, the value 'com.AtomicParsley' will be used as the domain.
+is not defined, the value 'com.AtomicParsley' will be used as the domain
+for the custom property/atom.
 
 When reading a file with custom atoms, the domain will appear as part
-of the property name UNLESS the domain matches the default domain defined
-in the PS_AtomicParsley_DefaultDomain environment variable.
+of the property name UNLESS (1) the domain matches the default domain 
+defined in the PS_AtomicParsley_DefaultDomain environment variable or
+(2) the custom atom has been added to the atoms.csv file in the root
+of the PowerShell module ("com.apple.iTunes;iTunMOVI" has already been
+added to this file).
 
 For example:
 ```
