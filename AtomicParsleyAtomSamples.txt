@@ -1,0 +1,150 @@
+====================================================================================================
+iTunes Movie Atoms
+====================================================================================================
+
+Width:1920 | Height:1078 | DisplaySize:1919x1078 | AspectRatio:16:9 | FrameRate:23.976 | FrameCount:150286 |
+VideoBitRate:4982050 | VideoFormat:AVC | Duration:104 | FormatProfile:High@L4.0 | EncodedSettings: |
+Summary:
+    Video: 1920x1078 16:9 23.976 fps 4 982 Kbps AVC High@L4.0, Audio: 2 channels 154 Kbps 48.0 KHz AAC,
+    Audio: iTunes 384 Kbps 48.0 KHz DD |
+AudioFormat:DD | AudioChannels:6 | AudioBitRate:384 Kbps | AudioSamplingRate:48.0 KHz | Encryption:iTunes |
+
+AtomicParsley Atom List:
+Atom "©nam" contains: The Dead Don't Die
+Atom "©ART" contains: Jim Jarmusch
+Atom "gnre" contains: Comedy
+Atom "cpil" contains: false
+Atom "pgap" contains: false
+Atom "©day" contains: 2019-06-14T07:00:00Z
+Atom "apID" contains: john@thedoes.org
+Atom "ownr" contains: John Doe
+Atom "cprt" contains: © 2019 Focus Features LLC. All Rights Reserved.
+Atom "cnID" contains: 1466254470
+Atom "rtng" contains: Inoffensive
+Atom "geID" contains: 4404
+Atom "sfID" contains: United States (143441)
+Atom "desc" contains: In the sleepy small town of Centerville, something is not quite right.
+Atom "hdvd" contains: 2
+Atom "stik" contains: Movie
+Atom "purd" contains: 2019-10-27 03:02:11
+Atom "sonm" contains: Dead Don't Die
+Atom "flvr" contains: 18:1080p
+Atom "----" [com.apple.iTunes;iTunEXTC] contains: mpaa|R|400|
+Atom "ldes" contains: It's the greatest zombie cast ever disassembled starring Bill Murray, Adam Driver, ...
+Atom "----" [com.apple.iTunes;iTunMOVI] contains: <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>cast</key>
+	<array>
+		<dict>
+			<key>adamId</key>
+			<integer>187698036</integer>
+			<key>name</key>
+			<string>Bill Murray</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>585243176</integer>
+			<key>name</key>
+			<string>Adam Driver</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>189071034</integer>
+			<key>name</key>
+			<string>Tilda Swinton</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>279628128</integer>
+			<key>name</key>
+			<string>Chloë Sevigny</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>222476</integer>
+			<key>name</key>
+			<string>Steve Buscemi</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>17008038</integer>
+			<key>name</key>
+			<string>Danny Glover</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>393519586</integer>
+			<key>name</key>
+			<string>Caleb Landry Jones</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>280215834</integer>
+			<key>name</key>
+			<string>Selena Gomez</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>83964</integer>
+			<key>name</key>
+			<string>Tom Waits</string>
+		</dict>
+	</array>
+	<key>codirectors</key>
+	<array/>
+	<key>copy-warning</key>
+	<string>FBI ANTI-PIRACY WARNING: UNAUTHORIZED COPYING IS PUNISHABLE UNDER FEDERAL LAW.</string>
+	<key>directors</key>
+	<array>
+		<dict>
+			<key>adamId</key>
+			<integer>177484014</integer>
+			<key>name</key>
+			<string>Jim Jarmusch</string>
+		</dict>
+	</array>
+	<key>producers</key>
+	<array>
+		<dict>
+			<key>adamId</key>
+			<integer>280586900</integer>
+			<key>name</key>
+			<string>Joshua Astrachan</string>
+		</dict>
+		<dict>
+			<key>adamId</key>
+			<integer>805626393</integer>
+			<key>name</key>
+			<string>Carter Logan</string>
+		</dict>
+	</array>
+	<key>screenwriters</key>
+	<array>
+		<dict>
+			<key>adamId</key>
+			<integer>177484014</integer>
+			<key>name</key>
+			<string>Jim Jarmusch</string>
+		</dict>
+	</array>
+	<key>studio</key>
+	<string>Universal Pictures</string>
+</dict>
+</plist>
+
+Atom "©cmt" contains: 1080p WS iTunes HD DD
+Atom "covr" contains: 1 piece of artwork
+
+====================================================================================================
+iTunes TV Show Atoms
+====================================================================================================
+
+
+
+
+
+
+
+
