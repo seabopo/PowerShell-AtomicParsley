@@ -26,7 +26,7 @@ mediaType,stik,moov.udta.meta.ilst,string,stik
 hdVideo,hdvd,moov.udta.meta.ilst,number,hdvideo
 flavor,flvr,moov.udta.meta.ilst,string,
 iTunesCatalogID,cnID,moov.udta.meta.ilst,number,cnID
-vendorID,xid,moov.udta.meta.ilst,string,xID
+vendorID,xid ,moov.udta.meta.ilst,string,xID
 purchaseDate,purd,moov.udta.meta.ilst,datetime,purchaseDate
 purchaseAccount,apID,moov.udta.meta.ilst,string,apID
 purchaseName,ownr,moov.udta.meta.ilst,string,
