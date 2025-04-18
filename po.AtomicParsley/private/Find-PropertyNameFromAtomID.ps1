@@ -1,4 +1,4 @@
-function Find-AtomNameFromID {
+function Find-PropertyNameFromAtomID {
     <#
     .DESCRIPTION
         Returns the iTunes metadata property name based on the Atom ID.
@@ -25,11 +25,15 @@ function Find-AtomNameFromID {
 
     process {
 
-        $Script:AP_ATOMS |
-            Where-Object { $_.AtomID.endsWith($AtomID) } |
-                Select-Object -ExpandProperty 'PropertyName'
+        Write-Msg -FunctionCall -IncludeParameters
 
-        return
+        $result = $Script:AP_ATOMS | 
+                      Where-Object { $_.AtomID.endsWith($AtomID) } | 
+                          Select-Object -ExpandProperty 'PropertyName'
+
+        Write-Msg -d -il 1 -m $( 'AtomID: {0} => Property Name: {1}' -f $AtomID, $($result ?? '<Not Found>') )
+
+        return $result
 
     }
 

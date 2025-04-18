@@ -20,14 +20,15 @@ function New-AtomicParsleyAtomCollection {
             Atom "stik" contains: Movie
 
     .EXAMPLE
-        New-AtomCollection -AtomData 'Atom "©nam" contains: The Dead Don't Die'
+        'Atom "©nam" contains: The Dead Don't Die' | New-AtomCollection
 
     .NOTES
         THIS FUNCTION IS NOT INTENDED TO BE CALLED DIRECTLY. IT IS INTENDED TO BE PIPELINED
-        from a string array containing the output of the AtomicParsley --metadata command.
+        from a string array containing the output of the AtomicParsley --metadata command
+        so that only one element of the collection is processed at a time.
 
         The function processes the atom data one line at a time and returns the hashtable
-        only after the pipeline has completed. Don't fee the output of this function to
+        only after the pipeline has completed. Don't feed the output of this function to
         another function if you want the output to be a hashtable containing the full
         collection of metadata.
     #>
@@ -43,6 +44,8 @@ function New-AtomicParsleyAtomCollection {
 
     process {
 
+        Write-Msg -FunctionCall -IncludeParameters
+
         if ( -not [string]::IsNullOrEmpty($AtomData) ) {
 
             if ( $AtomData.StartsWith('Atom ') -and $AtomData -like "* contains: *" ) {
@@ -50,7 +53,9 @@ function New-AtomicParsleyAtomCollection {
                 $AtomCollection.RawAtomData += ("{0}`r`n" -f $AtomData)
 
                 $AtomID,$AtomValue = $AtomData | ConvertFrom-AtomicParsleyAtomData
-                $AtomName = $( $AtomID | Find-AtomNameFromID ) ?? $AtomID
+                Write-Msg -d -il 1 -m $( 'Atom ID: {0}' -f $AtomID )
+                Write-Msg -d -il 1 -m $( 'Atom Value: {0}' -f $AtomValue )
+                $AtomName = $( $AtomID | Find-PropertyNameFromAtomID ) ?? $AtomID
 
                 if ( -not $AtomCollection.ContainsKey($AtomName) ) {
                     $AtomCollection.Add( $AtomName, $AtomValue )
@@ -63,6 +68,8 @@ function New-AtomicParsleyAtomCollection {
     }
 
     end {
+        Write-Msg -p -ps -m $( 'Function Result: New-AtomicParsleyAtomCollection' )
+        Write-Msg -d -il 1 -m $( 'Atom Collection: ') -o $AtomCollection
         return $AtomCollection
     }
 

@@ -17,7 +17,7 @@ function Test-AtomicParsleyBinaryExists {
 
         try {
 
-            Write-Msg -p -ps -m 'Testing if the AtomicParsley binary is installed ...'
+            Write-Msg -FunctionCall
 
             $test = Invoke-Cmd -c $( 'AtomicParsley -version' ) -r 0 -f -s
             if ( $test.Success ) {

@@ -37,21 +37,25 @@ function Invoke-AtomicParsleyCommand {
 
     process {
 
+        Write-Msg -FunctionCall -IncludeParameters
+        
         if ( $SCRIPT:AP_INSTALLED ) {
 
             if ( Test-Path -LiteralPath $File -ErrorAction Ignore ) {
 
+                Write-Msg -d -il 1 -m $( 'File Exists: {0}' -f $File )
+
                 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-
                 $cmd = $( "AtomicParsley `"{0}`" {1}" -f $File, $Command )
+                $result = Invoke-Cmd -c $cmd -r 0
 
-                $atoms = Invoke-Cmd -c $cmd -r 0
+                Write-Msg -d -m 'Command Result: ' -il 1 -o $result
 
-                if ( -not $atoms.success ) { Throw $atoms.message }
+                if ( -not $result.success ) { Throw $result.message }
 
-                if ( $SaveToFile ) { $atoms.value | Out-File -LiteralPath "FileSystem::$File.txt" }
+                if ( $SaveToFile ) { $result.value | Out-File -LiteralPath "FileSystem::$File.txt" }
 
-                $cleanAtoms = $atoms.value | Where-Object { $_ -ne "" }
+                $cleanResult = $result.value | Where-Object { $_ -ne "" }
 
             }
             else {
@@ -63,7 +67,7 @@ function Invoke-AtomicParsleyCommand {
             Throw 'iTunes data cannot be read or written. AtomicParsley was not found.'
         }
 
-        return $cleanAtoms
+        return $cleanResult
 
     }
 }

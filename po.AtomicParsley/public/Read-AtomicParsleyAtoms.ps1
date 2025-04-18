@@ -31,9 +31,12 @@ function Read-AtomicParsleyAtoms {
 
         try {
 
+            Write-Msg -FunctionCall -IncludeParameters
+
             $File |
                 Invoke-AtomicParsleyCommand -Command '--textdata' -SaveToFile:$SaveToFile |
-                    New-AtomicParsleyAtomCollection
+                    Merge-MultiLineAtoms |
+                        New-AtomicParsleyAtomCollection
 
             return
 
