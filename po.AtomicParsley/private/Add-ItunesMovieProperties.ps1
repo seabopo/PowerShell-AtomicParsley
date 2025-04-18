@@ -4,7 +4,7 @@ function Add-ItunesMovieProperties {
         Adds a set of properties to the atoms collection based on the lists embedded in the iTunesMovie property.
 
     .OUTPUTS
-        An updated hashtable object containing lists of properties for the iTunesMovie property.
+        An updated hashtable.
 
     .PARAMETER Atoms
         REQUIRED. Hashtable. Alias: -a. A hashtable containing a set of metadata / atoms.
@@ -13,7 +13,7 @@ function Add-ItunesMovieProperties {
         $atoms | Add-ItunesMovieProperties
 
     #>
-    [OutputType([Hashtable[]])]
+    [OutputType([Hashtable])]
     [CmdletBinding()]
     param (
         [parameter(Mandatory, ValueFromPipeline)] [Alias('a')] [Hashtable] $Atoms
