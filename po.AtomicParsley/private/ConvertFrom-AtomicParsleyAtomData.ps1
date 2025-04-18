@@ -1,7 +1,7 @@
 function ConvertFrom-AtomicParsleyAtomData {
     <#
     .DESCRIPTION
-        Converts a single AtomicParsley raw atom data text definition to a key/value pair.
+        Converts a single AtomicParsley atom definition to a object key/value pair.
 
     .OUTPUTS
         A string array containing exactly two elements: the atom id and the atom value.
@@ -30,33 +30,50 @@ function ConvertFrom-AtomicParsleyAtomData {
     )
 
     begin {
-        $knownRdnsAtoms = @( 'com.apple.iTunes;iTunEXTC'; 'com.apple.iTunes;iTunMOVI' )
+        $knownRdnsAtoms = $Script:AP_ATOMS | Where-Object { $_.AtomDomain -ne 'moov.udta.meta.ilst' } |
+                          ForEach-Object { $('{0};{1}' -f $_.AtomDomain, $_.AtomID ) }
     }
 
     process {
 
+        Write-Msg -FunctionCall -IncludeParameters
+        
         if ( $AtomData.StartsWith('Atom ') ) {
+
+            Write-Msg -d -il 1 -m $( 'Data appears to be a valid atom.' )
 
             $id,$value = $( ( $AtomData.Replace('"','').Substring(5).Trim() ) -Split " contains: " )
 
             if ( $id.StartsWith('---- [') ) {
+                Write-Msg -d -il 1 -m $( 'ReverseDNS atom found.' )
                 $id = $id.Substring(6,$id.length - 7)
+            }
+            else {
+                Write-Msg -d -il 1 -m $( 'Standard atom found.' )
             }
 
             if  ( $knownRdnsAtoms -contains $id ) {
+                Write-Msg -d -il 1 -m $( 'ReverseDNS atom is known.' )
                 $id = $id.Split(';')[1]
-                if ( $id -eq 'iTunEXTC' ) {
-                    $association, $value, $code, $unused = $Value.Split('|')
-                }
             }
 
             if ( -not [String]::IsNullOrEmpty($value) ) {
                 if ( $value.StartsWith("'") -and $value.EndsWith("'") ) {
+                    Write-Msg -d -il 1 -m $( 'Terminating single quotes removed.' )
                     $value = $value.TrimStart("'").TrimEnd("'")
                 }
+                Write-Msg -d -il 1 -m $( 'Value trimmed.' )
                 $value = $value.Trim()
             }
 
+            if ( $id -eq 'iTunEXTC' ) {
+                Write-Msg -d -il 1 -m $( 'ReverseDNS atom is iTunEXTC. Filtering value to ContentRating.' )
+                $association, $value, $code, $unused = $Value.Split('|')
+            }
+
+        }
+        else {
+            Write-Msg -d -il 1 -m $( 'Data does not appear to be a valid atom.' )
         }
 
         return $id,$value
