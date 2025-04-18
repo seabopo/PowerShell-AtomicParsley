@@ -28,9 +28,7 @@ function New-AtomicParsleyAtomCollection {
         so that only one element of the collection is processed at a time.
 
         The function processes the atom data one line at a time and returns the hashtable
-        only after the pipeline has completed. Don't feed the output of this function to
-        another function if you want the output to be a hashtable containing the full
-        collection of metadata.
+        only after the pipeline has completed.
     #>
     [OutputType([hashtable[]])]
     [CmdletBinding()]

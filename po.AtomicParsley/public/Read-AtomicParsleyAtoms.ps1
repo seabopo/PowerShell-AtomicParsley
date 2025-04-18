@@ -36,7 +36,8 @@ function Read-AtomicParsleyAtoms {
             $File |
                 Invoke-AtomicParsleyCommand -Command '--textdata' -SaveToFile:$SaveToFile |
                     Merge-MultiLineAtoms |
-                        New-AtomicParsleyAtomCollection
+                        New-AtomicParsleyAtomCollection |
+                            Add-ItunesMovieProperties
 
             return
 
