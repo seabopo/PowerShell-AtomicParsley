@@ -23,10 +23,10 @@ function ConvertFrom-AtomicParsleyAtomData {
     .NOTES
         Atom names come in two formats: "©day" and "---- [com.apple.iTunes;iTunEXTC]".
     #>
-    [OutputType([string],[string])]
+    [OutputType(([String],[String]))]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory, ValueFromPipeline)] [Alias('d')] [String] $AtomData
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {

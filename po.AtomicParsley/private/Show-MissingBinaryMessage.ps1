@@ -9,7 +9,7 @@ function Show-MissingBinaryMessage {
     .EXAMPLE
         Show-MissingBinaryMessage
     #>
-    [OutputType([void])]
+    [OutputType([Void])]
     [CmdletBinding()]
     param ( )
 

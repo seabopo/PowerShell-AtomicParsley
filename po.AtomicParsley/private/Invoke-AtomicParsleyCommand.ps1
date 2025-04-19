@@ -27,12 +27,12 @@ function Invoke-AtomicParsleyCommand {
     .NOTES
         Results are returned as a string array of console line results.
     #>
-    [OutputType([string[]])]
+    [OutputType([String[]])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory,ValueFromPipeline)] [Alias('f')] [string] $File,
-        [Parameter()]                            [Alias('c')] [string] $Command = '--textdata',
-        [Parameter()]                            [Alias('s')] [switch] $SaveToFile
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('f')] [String] $File,
+        [Parameter()]                            [Alias('c')] [String] $Command = '--textdata',
+        [Parameter()]                            [Alias('s')] [Switch] $SaveToFile
     )
 
     process {

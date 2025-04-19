@@ -8,7 +8,7 @@ function Read-AtomicParsleyAtoms {
         the file specified in the File parameter.
 
     .PARAMETER File
-        REQUIRED. String. Alias: -p. The fully-qualified file path of a file containing iTunes-style metadata.
+        REQUIRED. String. Alias: -f. The fully-qualified file path of a file containing iTunes-style metadata.
 
     .PARAMETER SaveToFile
         OPTIONAL. Switch. Alias: -s. Saves the metadata to a text file. The file will be located in the same

@@ -14,11 +14,11 @@ function Add-ItunesMovieProperties {
         $atoms | Add-ItunesMovieProperties
 
     #>
-    [OutputType([System.Collections.Generic.SortedDictionary[string,string]])]
+    [OutputType([System.Collections.Generic.SortedDictionary[String,String]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory,ValueFromPipeline)] [Alias('a')] 
-        [System.Collections.Generic.SortedDictionary[string,string]] $Atoms
+        [System.Collections.Generic.SortedDictionary[String,String]] $Atoms
     )
 
     process {

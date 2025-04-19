@@ -17,10 +17,10 @@ function Find-PropertyNameFromAtomID {
         characters in the id (for example, '©day') which are sometimes stripped out depending on the OS an
         it's character support.
     #>
-    [OutputType([string])]
+    [OutputType([String])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory,ValueFromPipeline)] [Alias('i')] [string] $AtomID
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('i')] [String] $AtomID
     )
 
     process {
