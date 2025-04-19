@@ -66,8 +66,7 @@ function Add-ItunesMovieProperties {
     }
 
     end {
-        Write-Msg -p -ps -m $( 'Function Result: Add-ItunesMovieProperties' )
-        Write-Msg -d -il 1 -m $( 'Atom Collection: ') -o $Atoms
+        Write-Msg -r -m $( 'Atoms: ') -o $Atoms
         return $Atoms
     }
 

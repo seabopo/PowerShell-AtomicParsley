@@ -67,8 +67,7 @@ function New-AtomicParsleyAtomCollection {
     }
 
     end {
-        Write-Msg -p -ps -m $( 'Function Result: New-AtomicParsleyAtomCollection' )
-        Write-Msg -d -il 1 -m $( 'Atom Collection: ') -o $AtomCollection
+        Write-Msg -r -m $( 'Atom Collection: ') -o $AtomCollection
         Write-Output $AtomCollection
     }
 
