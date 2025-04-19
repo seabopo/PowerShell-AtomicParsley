@@ -4,19 +4,21 @@ function Add-ItunesMovieProperties {
         Adds a set of properties to the atoms collection based on the lists embedded in the iTunesMovie property.
 
     .OUTPUTS
-        An updated hashtable.
+        [System.Collections.Generic.SortedDictionary[string,string]] of metadata atoms.
 
     .PARAMETER Atoms
-        REQUIRED. Hashtable. Alias: -a. A hashtable containing a set of metadata / atoms.
+        REQUIRED. System.Collections.Generic.SortedDictionary. Alias: -a. An ordered dictionary containing 
+        a set of metadata / atoms.
 
     .EXAMPLE
         $atoms | Add-ItunesMovieProperties
 
     #>
-    [OutputType([Hashtable])]
+    [OutputType([System.Collections.Generic.SortedDictionary[string,string]])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('a')] [Hashtable] $Atoms
+        [parameter(Mandatory,ValueFromPipeline)] [Alias('a')] 
+        [System.Collections.Generic.SortedDictionary[string,string]] $Atoms
     )
 
     process {
@@ -33,10 +35,11 @@ function Add-ItunesMovieProperties {
 
       # Add the string properties to the atom list.
         foreach ( $property in $propertyNames ) {
+            $key   = $( 'iTunesMovie{0}' -f (Get-Culture).TextInfo.ToTitleCase($property) )
             $value = ([regex]('<key>{0}<\/key><string>[^<]*<\/string>' -f $property)).Matches($movieData) |
                      Select-Object -First 1 -ExpandProperty 'value' |
                      ForEach-Object { $_ -replace ('<key>{0}<\/key>' -f $property),'' -replace '<[^>]+>','' }
-            $Atoms[$( 'iTunesMovie{0}' -f (Get-Culture).TextInfo.ToTitleCase($property) )] = $value
+            $Atoms.Add($key, $value)
         }
 
       # Get the names of the list properties to to add to the the atom list. Example: Cast, Directors, etc.
@@ -45,7 +48,8 @@ function Add-ItunesMovieProperties {
                      
       # Add the list properties to the atom list.
         foreach ( $property in $propertyNames ) {
-            [String[]]$value = (([regex]('<key>{0}<\/key><array>(.*?)<\/array>' -f $property)).Matches($movieData) |
+            [String]   $key   = $( 'iTunesMovie{0}' -f (Get-Culture).TextInfo.ToTitleCase($property) )
+            [String[]] $value = (([regex]('<key>{0}<\/key><array>(.*?)<\/array>' -f $property)).Matches($movieData) |
                                 Select-Object -First 1 -ExpandProperty 'value' ) -split '<dict>' |
                                 ForEach-Object {
                                     $name = ([regex]('<string>(.*?)<\/string>')).Matches($_) |
@@ -56,7 +60,7 @@ function Add-ItunesMovieProperties {
                                             ForEach-Object { $_ -replace '<[^>]+>','' }
                                     if ( $null -ne $name ) { $( '{0}:{1}' -f $name, $id ) }
                                 }
-            $Atoms[$( 'iTunesMovie{0}' -f (Get-Culture).TextInfo.ToTitleCase($property) )] = $value
+            $Atoms.Add($key, $value)
         }
         
     }

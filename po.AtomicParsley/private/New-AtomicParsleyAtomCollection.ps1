@@ -5,7 +5,7 @@ function New-AtomicParsleyAtomCollection {
         by the AtomicParsley --metadata command.
 
     .OUTPUTS
-        A hashtable containing the iTunes metadata of a media file.
+        [System.Collections.Generic.SortedDictionary[string,string]] of metadata atoms.
 
     .PARAMETER AtomData
         REQUIRED. String. Alias: -d. A string containing a single line item of atom data returned by the
@@ -30,14 +30,15 @@ function New-AtomicParsleyAtomCollection {
         The function processes the atom data one line at a time and returns the hashtable
         only after the pipeline has completed.
     #>
-    [OutputType([hashtable[]])]
+    [OutputType([System.Collections.Generic.SortedDictionary[string,string]])]
     [CmdletBinding()]
     param (
         [parameter(Mandatory, ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {
-        [Hashtable] $AtomCollection = @{ RawAtomData = "" }
+        $AtomCollection = [System.Collections.Generic.SortedDictionary[string,string]]::new()
+        $AtomCollection.Add( 'RawAtomData', "" )
     }
 
     process {
@@ -68,7 +69,7 @@ function New-AtomicParsleyAtomCollection {
     end {
         Write-Msg -p -ps -m $( 'Function Result: New-AtomicParsleyAtomCollection' )
         Write-Msg -d -il 1 -m $( 'Atom Collection: ') -o $AtomCollection
-        return $AtomCollection
+        Write-Output $AtomCollection
     }
 
 }

@@ -37,11 +37,10 @@ Import-Module $modulePath  -Force
 # Please see the ReadMe file for information about file/folder permissions on MacOS.
 # https://github.com/seabopo/PowerShell-AtomicParsley/blob/main/README.md
 #
-
     $localFilePath = '/Users/{0}/Movies/Movie (1080p HD).m4v' -f [Environment]::UserName
-    $atoms = Read-AtomicParsleyAtoms -FilePath $localFilePath
+    $atoms = Read-AtomicParsleyAtoms -File $localFilePath
     $atoms
-    $atoms.EmbeddedData
+    $atoms.iTunesMovie
     exit
 
 #-----------------------------
@@ -50,7 +49,6 @@ Import-Module $modulePath  -Force
 #
 # This sample assumes you have connected to a network share named 'Media' and it is available on your desktop.
 #
-
     $networkFilePath = '/Volumes/Media/Movies/Movie (1080p HD).m4v'
-    $atoms = Read-AtomicParsleyAtoms -FilePath $networkFilePath
+    $atoms = Read-AtomicParsleyAtoms -File $networkFilePath
 
