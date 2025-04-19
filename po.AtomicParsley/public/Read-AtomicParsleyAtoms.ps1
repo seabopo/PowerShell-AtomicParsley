@@ -7,7 +7,7 @@ function Read-AtomicParsleyAtoms {
         A [System.Collections.Generic.SortedDictionary[string,string]] containing the iTunes-style metadata from 
         the file specified in the File parameter.
 
-    .PARAMETER FilePath
+    .PARAMETER File
         REQUIRED. String. Alias: -p. The fully-qualified file path of a file containing iTunes-style metadata.
 
     .PARAMETER SaveToFile
@@ -21,7 +21,7 @@ function Read-AtomicParsleyAtoms {
     .EXAMPLE
         Read-AtomicParsleyAtoms -p 'C:\myfile.mp4' -s
     #>
-    [OutputType([System.Collections.Generic.SortedDictionary[string,string]])]
+    [OutputType([System.Collections.Generic.SortedDictionary[String,String]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)] [Alias('f')] [String] $File,

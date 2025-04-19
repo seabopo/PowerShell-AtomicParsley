@@ -17,7 +17,7 @@ function Add-ItunesMovieProperties {
     [OutputType([System.Collections.Generic.SortedDictionary[string,string]])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory,ValueFromPipeline)] [Alias('a')] 
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('a')] 
         [System.Collections.Generic.SortedDictionary[string,string]] $Atoms
     )
 

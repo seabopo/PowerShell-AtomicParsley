@@ -26,7 +26,7 @@ function ConvertFrom-AtomicParsleyAtomData {
     [OutputType([string],[string])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('d')] [String] $AtomData
+        [Parameter(Mandatory, ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {

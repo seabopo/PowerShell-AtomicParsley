@@ -18,10 +18,10 @@ function Merge-MultiLineAtoms {
         from a string array containing the output of the AtomicParsley --metadata command.
 
     #>
-    [OutputType([hashtable[]])]
+    [OutputType([String])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('d')] [String] $AtomData
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {

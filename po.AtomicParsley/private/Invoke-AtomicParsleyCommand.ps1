@@ -30,9 +30,9 @@ function Invoke-AtomicParsleyCommand {
     [OutputType([string[]])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('f')] [string] $File,
-        [parameter()]                             [Alias('c')] [string] $Command = '--textdata',
-        [parameter()]                             [Alias('s')] [switch] $SaveToFile
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('f')] [string] $File,
+        [Parameter()]                            [Alias('c')] [string] $Command = '--textdata',
+        [Parameter()]                            [Alias('s')] [switch] $SaveToFile
     )
 
     process {

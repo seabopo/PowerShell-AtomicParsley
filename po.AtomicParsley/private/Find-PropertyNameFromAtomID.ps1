@@ -20,7 +20,7 @@ function Find-PropertyNameFromAtomID {
     [OutputType([string])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('i')] [string] $AtomID
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('i')] [string] $AtomID
     )
 
     process {

@@ -33,7 +33,7 @@ function New-AtomicParsleyAtomCollection {
     [OutputType([System.Collections.Generic.SortedDictionary[string,string]])]
     [CmdletBinding()]
     param (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('d')] [String] $AtomData
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {
