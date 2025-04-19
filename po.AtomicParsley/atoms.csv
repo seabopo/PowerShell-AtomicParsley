@@ -55,5 +55,5 @@ podcastURL,purl,moov.udta.meta.ilst,URL,podcastURL
 podcastGUID,egid,moov.udta.meta.ilst,URL,podcastGUID
 encodingTool,©too,moov.udta.meta.ilst,string,encodingTool
 encodedBy,©enc,moov.udta.meta.ilst,string,encodedBy
-unknown1,atID,moov.udta.meta.ilst,number,
-unknown2,plID,moov.udta.meta.ilst,number,
+atID,atID,moov.udta.meta.ilst,number,
+plID,plID,moov.udta.meta.ilst,number,
