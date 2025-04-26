@@ -7,18 +7,18 @@ function Add-ItunesMovieProperties {
         [System.Collections.Generic.SortedDictionary[string,string]] of metadata atoms.
 
     .PARAMETER Atoms
-        REQUIRED. System.Collections.Generic.SortedDictionary. Alias: -a. An ordered dictionary containing 
+        REQUIRED. SortedDictionary[String,String]. Alias: -a. An ordered dictionary containing 
         a set of metadata / atoms.
 
     .EXAMPLE
         $atoms | Add-ItunesMovieProperties
 
     #>
-    [OutputType([System.Collections.Generic.SortedDictionary[String,String]])]
+    [OutputType([SortedDictionary[String,String]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory,ValueFromPipeline)] [Alias('a')] 
-        [System.Collections.Generic.SortedDictionary[String,String]] $Atoms
+        [SortedDictionary[String,String]] $Atoms
     )
 
     process {

@@ -8,6 +8,9 @@
 # Module Initializations
 #==================================================================================================================
 
+using namespace System.Collections.Generic
+using namespace System.Collections.Specialized
+
 $ErrorActionPreference = "Stop"
 
 Set-Variable -Scope 'Script' -Name "PS_MODULE_ROOT"  -Value $PSScriptRoot

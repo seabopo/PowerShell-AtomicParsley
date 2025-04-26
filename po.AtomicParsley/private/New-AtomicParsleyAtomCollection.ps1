@@ -30,14 +30,14 @@ function New-AtomicParsleyAtomCollection {
         The function processes the atom data one line at a time and returns the hashtable
         only after the pipeline has completed.
     #>
-    [OutputType([System.Collections.Generic.SortedDictionary[String,String]])]
+    [OutputType([SortedDictionary[String,String]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory,ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {
-        $AtomCollection = [System.Collections.Generic.SortedDictionary[String,String]]::new()
+        $AtomCollection = [SortedDictionary[String,String]]::new()
         $AtomCollection.Add( 'RawAtomData', "" )
     }
 

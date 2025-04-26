@@ -21,7 +21,7 @@ function Read-AtomicParsleyAtoms {
     .EXAMPLE
         Read-AtomicParsleyAtoms -p 'C:\myfile.mp4' -s
     #>
-    [OutputType([System.Collections.Generic.SortedDictionary[String,String]])]
+    [OutputType([SortedDictionary[String,String]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)] [Alias('f')] [String] $File,
