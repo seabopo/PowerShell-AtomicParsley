@@ -42,12 +42,12 @@ tempo,tmpo,moov.udta.meta.ilst,number,bpm
 advisoryRating,rtng,moov.udta.meta.ilst,string,advisory
 gaplessPlayback,pgap,moov.udta.meta.ilst,boolean,gapless
 userRating,rate,moov.udta.meta.ilst,string,Rating
-sortName,sonm,moov.udta.meta.ilst,string,sortOrder-name
-sortShow,sosn,moov.udta.meta.ilst,string,sortOrder-show
-sortAlbum,soal,moov.udta.meta.ilst,string,sortOrder-album
-sortAlbumArtist,soaa,moov.udta.meta.ilst,string,sortOrder-albumartist
-sortArtist,soar,moov.udta.meta.ilst,string,sortOrder-artist
-sortComposer,soco,moov.udta.meta.ilst,string,sortOrder-composer
+sortName,sonm,moov.udta.meta.ilst,string,sortOrder name
+sortShow,sosn,moov.udta.meta.ilst,string,sortOrder show
+sortAlbum,soal,moov.udta.meta.ilst,string,sortOrder album
+sortAlbumArtist,soaa,moov.udta.meta.ilst,string,sortOrder albumartist
+sortArtist,soar,moov.udta.meta.ilst,string,sortOrder artist
+sortComposer,soco,moov.udta.meta.ilst,string,sortOrder composer
 podcast,pcst,moov.udta.meta.ilst,boolean,podcastFlag
 category,catg,moov.udta.meta.ilst,string,category
 keywords,keyw,moov.udta.meta.ilst,string,keyword
