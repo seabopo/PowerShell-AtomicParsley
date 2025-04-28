@@ -29,6 +29,10 @@ if ( $null -eq $env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES ) {
     $env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES = '["Header","Process","Information","Debug"]'
 }
 
+if ( $null -eq $env:PS_ATOMICPARSLEY_DEFAULTDOMAIN ) {
+    $env:PS_ATOMICPARSLEY_DEFAULTDOMAIN = 'com.AtomicParsley'
+}
+
 #==================================================================================================================
 # Load Functions and Export Public Functions and Aliases
 #==================================================================================================================
@@ -62,5 +66,8 @@ if ( -not $( Test-AtomicParsleyBinaryExists ) ) {
 # Load the List of Atomic Parsley Known Atoms
 #==================================================================================================================
 
-$Script:AP_ATOMS = Import-Csv -Path $Script:AP_ATOMS_PATH -Delimiter ',' #-Encoding 'UTF8'
-
+$Script:AP_ATOMS = Import-Csv -Path $Script:AP_ATOMS_PATH -Delimiter ',' | #-Encoding 'UTF8'
+    ForEach-Object {
+        $_.WriteSupported = [System.Convert]::ToBoolean($_.WriteSupported)
+        $_
+    }
