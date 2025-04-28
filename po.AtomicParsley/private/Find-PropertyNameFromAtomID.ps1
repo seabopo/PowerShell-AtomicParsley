@@ -10,7 +10,7 @@ function Find-PropertyNameFromAtomID {
         REQUIRED. String. Alias: -i. A valid iTunes Atom ID.
 
     .EXAMPLE
-        Find-AtomNameFromID -AtomID '©nam'
+        Find-PropertyNameFromAtomID -AtomID '©nam'
 
     .NOTES
         The function uses an 'endsWith' comparison to match the Atom ID as some of the atoms have special

@@ -1,29 +1,79 @@
 function Write-AtomicParsleyAtoms {
     <#
     .DESCRIPTION
-        Write itunes meta data to an mp4 file.
+        Writes a collection of iTunes-style metadata to an mp3 or mp4 media file.
 
-    .PARAMETER FilePath
-        REQUIRED. String. The fully-qualified file path of a file to embedded iTunes atoms.
+    .OUTPUTS
+        Boolean indicating if the process was successful or not.
 
-    .PARAMETER CommandLine
-        REQUIRED. String. A complete commandline containing all of the Atomic Parsley parameters and values.
+    .PARAMETER File
+         REQUIRED. String. Alias: -f. The fully-qualified file path of a file to write iTunes-style metadata.
+
+    .PARAMETER Atoms
+        OPTIONAL. System.Collections.Generic.SortedDictionary. Alias: -a. An ordered dictionary containing 
+        a set of metadata / atoms.
+
+    .PARAMETER RemoveAll
+        OPTIONAL. Switch. Alias: -r. Removes all metadata from the file. If both this parameter and the atoms
+        parameter is specified the file will be cleared of all metadata before writing the new metadata.
 
     .EXAMPLE
-        Write-AtomicParsleyAtoms -FilePath 'C:\myfile.mp4' -CommandLine "--title `"Gilligan's Island`""
+        Write-AtomicParsleyAtoms -File 'C:\myfile.mp4' -Atoms $atoms -RemoveAll
 
     #>
+    [OutputType([Boolean])]
     [CmdletBinding()]
-    param
-    (
-        [parameter(Mandatory, ValueFromPipeline)] [Alias('fp')] [string] $FilePath,
-        [Parameter()]                             [Alias('cl')] [string] $CommandLine
+    param (
+        [Parameter(Mandatory)] [Alias('f')] [String] $File,
+        [Parameter()]          [Alias('a')] [SortedDictionary[String,String]] $Atoms,
+        [Parameter()]          [Alias('r')] [Switch] $RemoveAll
     )
 
-    Process
-    {
-        $FilePath |
-            Invoke-AtomicParsleyCommand -Command $CommandLine | Out-Null
-                return
+    begin {
+
+        $ignoreList = @( 'RawAtomData', 'coverArt' )
+
     }
+
+    process {
+
+        try {
+
+            Write-Msg -FunctionCall -IncludeParameters
+
+            if ( $RemoveAll ) {
+                $cmd = '--metaEnema --overWrite'
+                Invoke-AtomicParsleyCommand -Command $cmd -File $File | Out-Null
+            }
+
+            if ( $null -ne $Atoms ) {
+
+                $Atoms.Keys | Where-Object { $_ -like @("iTunesMovie*") } | #-and $_ -ne 'iTunesMovie' } |
+                    ForEach-Object { $ignoreList += $_.ToString() }
+
+                $parameters = Build-AtomicParsleyParameterList -Atoms $Atoms -IgnoreList $ignoreList
+
+                $parameters += '--overWrite'
+
+                Write-Msg -p -ps -m $( 'Parameters:' )
+                $parameters | ForEach-Object {
+                    Write-Msg -d -m $_
+                }
+
+                Invoke-AtomicParsleyCommand -Command ($parameters -Join ' ') -File $File | Out-Null
+
+            }
+
+            $returnValue = $true
+
+        }
+        catch {
+            $returnValue = $false
+            Write-Msg -x -o $_
+        }
+
+        return $returnValue
+
+    }
+
 }
