@@ -302,20 +302,20 @@ Write-AtomicParsleyAtoms -File './Movie (1080p HD).m4v' -Atoms $atoms
 ```
 
 ... a default domain will be used. The value of the default domain is defined
-by the environment variable PS_AtomicParsley_DefaultDomain. If that value
+by the environment variable PS_ATOMICPARSLEY_DEFAULTDOMAIN. If that value
 is not defined, the value 'com.AtomicParsley' will be used as the domain
 for the custom property/atom.
 
 When reading a file with custom atoms, the domain will appear as part
 of the property name UNLESS (1) the domain matches the default domain 
-defined in the PS_AtomicParsley_DefaultDomain environment variable or
+defined in the PS_ATOMICPARSLEY_DEFAULTDOMAIN environment variable or
 (2) the custom atom has been added to the atoms.csv file in the root
 of the PowerShell module ("com.apple.iTunes;iTunMOVI" has already been
 added to this file).
 
 For example:
 ```
-$env:PS_AtomicParsley_DefaultDomain = 'com.me'
+$env:PS_ATOMICPARSLEY_DEFAULTDOMAIN = 'com.me'
 
 $atoms = @{
     'org.themoviedb;TMdbID' = 862
