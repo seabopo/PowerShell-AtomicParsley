@@ -10,7 +10,11 @@ AtomicParsley is an open source project available on Github
 (https://github.com/wez/atomicparsley) under the GPL-2.0 License. 
 
 ## Functionality
-This module allows data to be read from and written to media files using a PowerShell object.
+This module generates the command-lines necessary to read and write data from 
+AtomicParsley based on a PowerShell Object of key/value pairs. This module was
+tested primarily with metadata from **VIDEO** files (iTunes Movies and TV Shows).
+AudioBooks, Podcasts and Music were tested and seem to work well, but I have 
+a much smaller sample size available. 
 
 ### Reading Data from a File
 
