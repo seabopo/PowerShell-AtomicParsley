@@ -24,7 +24,7 @@ discNumber,disk,moov.udta.meta.ilst,numberOfnumber,disk,TRUE
 coverArt,covr,moov.udta.meta.ilst,string,artwork,TRUE
 mediaType,stik,moov.udta.meta.ilst,string,stik,TRUE
 hdVideo,hdvd,moov.udta.meta.ilst,number,hdvideo,TRUE
-flavor,flvr,moov.udta.meta.ilst,string,,TRUE
+flavor,flvr,moov.udta.meta.ilst,string,,FALSE
 iTunesCatalogID,cnID,moov.udta.meta.ilst,number,cnID,TRUE
 vendorID,xid,moov.udta.meta.ilst,string,xID,TRUE
 purchaseDate,purd,moov.udta.meta.ilst,datetime,purchaseDate,TRUE
