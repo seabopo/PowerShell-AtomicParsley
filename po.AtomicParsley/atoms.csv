@@ -1,59 +1,60 @@
-PropertyName,AtomID,AtomDomain,DataType,ParameterName
-title,©nam,moov.udta.meta.ilst,string,title
-description,desc,moov.udta.meta.ilst,string,description
-longDescription,ldes,moov.udta.meta.ilst,string,longdesc
-genre,©gen,moov.udta.meta.ilst,string,genre
-iTunesGenre,geID,moov.udta.meta.ilst,number,geID
-releaseDate,©day,moov.udta.meta.ilst,number,year
-contentRating,iTunEXTC,com.apple.iTunes,string,contentRating
-iTunesMovie,iTunMOVI,com.apple.iTunes,string,
-tvShowName,tvsh,moov.udta.meta.ilst,string,TVShowName
-tvSeasonNumber,tvsn,moov.udta.meta.ilst,number,TVSeasonNum
-tvEpisodeNumber,tves,moov.udta.meta.ilst,number,TVEpisodeNum
-tvEpisodeID,tven,moov.udta.meta.ilst,string,TVEpisode
-tvNetwork,tvnn,moov.udta.meta.ilst,string,TVNetwork
-storeDescription,sdes,moov.udta.meta.ilst,string,storedesc
-artist,©ART,moov.udta.meta.ilst,string,artist
-albumArtist,aART,moov.udta.meta.ilst,string,albumArtist
-composer,©wrt,moov.udta.meta.ilst,string,composer
-album,©alb,moov.udta.meta.ilst,string,album
-grouping,©grp,moov.udta.meta.ilst,string,grouping
-comment,©cmt,moov.udta.meta.ilst,string,comment
-trackNumber,trkn,moov.udta.meta.ilst,number,tracknum
-discNumber,disk,moov.udta.meta.ilst,number,disk
-coverArt,covr,moov.udta.meta.ilst,string,artwork
-mediaType,stik,moov.udta.meta.ilst,string,stik
-hdVideo,hdvd,moov.udta.meta.ilst,number,hdvideo
-flavor,flvr,moov.udta.meta.ilst,string,
-iTunesCatalogID,cnID,moov.udta.meta.ilst,number,cnID
-vendorID,xid ,moov.udta.meta.ilst,string,xID
-purchaseDate,purd,moov.udta.meta.ilst,datetime,purchaseDate
-purchaseAccount,apID,moov.udta.meta.ilst,string,apID
-purchaseName,ownr,moov.udta.meta.ilst,string,
-downloadAccount,dwID,moov.udta.meta.ilst,string,
-downloadName,dwlr,moov.udta.meta.ilst,string,
-accountType,akID,moov.udta.meta.ilst,string,
-countryCode,sfID,moov.udta.meta.ilst,number,
-copyright,cprt,moov.udta.meta.ilst,string,copyright
-musicGenre,gnre,moov.udta.meta.ilst,number,genre
-compilation,cpil,moov.udta.meta.ilst,boolean,compilation
-lyrics,©lyr,moov.udta.meta.ilst,string,lyrics
-tempo,tmpo,moov.udta.meta.ilst,number,bpm
-advisoryRating,rtng,moov.udta.meta.ilst,string,advisory
-gaplessPlayback,pgap,moov.udta.meta.ilst,boolean,gapless
-userRating,rate,moov.udta.meta.ilst,string,Rating
-sortName,sonm,moov.udta.meta.ilst,string,sortOrder name
-sortShow,sosn,moov.udta.meta.ilst,string,sortOrder show
-sortAlbum,soal,moov.udta.meta.ilst,string,sortOrder album
-sortAlbumArtist,soaa,moov.udta.meta.ilst,string,sortOrder albumartist
-sortArtist,soar,moov.udta.meta.ilst,string,sortOrder artist
-sortComposer,soco,moov.udta.meta.ilst,string,sortOrder composer
-podcast,pcst,moov.udta.meta.ilst,boolean,podcastFlag
-category,catg,moov.udta.meta.ilst,string,category
-keywords,keyw,moov.udta.meta.ilst,string,keyword
-podcastURL,purl,moov.udta.meta.ilst,URL,podcastURL
-podcastGUID,egid,moov.udta.meta.ilst,URL,podcastGUID
-encodingTool,©too,moov.udta.meta.ilst,string,encodingTool
-encodedBy,©enc,moov.udta.meta.ilst,string,encodedBy
-atID,atID,moov.udta.meta.ilst,number,
-plID,plID,moov.udta.meta.ilst,number,
+PropertyName,AtomID,AtomDomain,DataType,ParameterName,WriteSupported
+title,©nam,moov.udta.meta.ilst,string,title,TRUE
+description,desc,moov.udta.meta.ilst,string,description,TRUE
+longDescription,ldes,moov.udta.meta.ilst,string,longdesc,TRUE
+genre,©gen,moov.udta.meta.ilst,string,genre,TRUE
+iTunesGenre,geID,moov.udta.meta.ilst,number,geID,TRUE
+releaseDate,©day,moov.udta.meta.ilst,number,year,TRUE
+contentRating,iTunEXTC,com.apple.iTunes,string,contentRating,TRUE
+iTunesMovie,iTunMOVI,com.apple.iTunes,string,,TRUE
+tvShowName,tvsh,moov.udta.meta.ilst,string,TVShowName,TRUE
+tvSeasonNumber,tvsn,moov.udta.meta.ilst,number,TVSeasonNum,TRUE
+tvEpisodeNumber,tves,moov.udta.meta.ilst,number,TVEpisodeNum,TRUE
+tvEpisodeID,tven,moov.udta.meta.ilst,string,TVEpisode,TRUE
+tvNetwork,tvnn,moov.udta.meta.ilst,string,TVNetwork,TRUE
+storeDescription,sdes,moov.udta.meta.ilst,string,storedesc,TRUE
+artist,©ART,moov.udta.meta.ilst,string,artist,TRUE
+albumArtist,aART,moov.udta.meta.ilst,string,albumArtist,TRUE
+composer,©wrt,moov.udta.meta.ilst,string,composer,TRUE
+album,©alb,moov.udta.meta.ilst,string,album,TRUE
+grouping,©grp,moov.udta.meta.ilst,string,grouping,TRUE
+comment,©cmt,moov.udta.meta.ilst,string,comment,TRUE
+trackNumber,trkn,moov.udta.meta.ilst,numberOfnumber,tracknum,TRUE
+discNumber,disk,moov.udta.meta.ilst,numberOfnumber,disk,TRUE
+coverArt,covr,moov.udta.meta.ilst,string,artwork,TRUE
+mediaType,stik,moov.udta.meta.ilst,string,stik,TRUE
+hdVideo,hdvd,moov.udta.meta.ilst,number,hdvideo,TRUE
+flavor,flvr,moov.udta.meta.ilst,string,,TRUE
+iTunesCatalogID,cnID,moov.udta.meta.ilst,number,cnID,TRUE
+vendorID,xid,moov.udta.meta.ilst,string,xID,TRUE
+purchaseDate,purd,moov.udta.meta.ilst,datetime,purchaseDate,TRUE
+purchaseAccount,apID,moov.udta.meta.ilst,string,apID,TRUE
+purchaseName,ownr,moov.udta.meta.ilst,string,,FALSE
+downloadAccount,dwID,moov.udta.meta.ilst,string,,FALSE
+downloadName,dwlr,moov.udta.meta.ilst,string,,FALSE
+accountType,akID,moov.udta.meta.ilst,string,,FALSE
+storeFrontID,sfID,moov.udta.meta.ilst,number,,FALSE
+copyright,cprt,moov.udta.meta.ilst,string,copyright,TRUE
+musicGenre,gnre,moov.udta.meta.ilst,number,genre,TRUE
+compilation,cpil,moov.udta.meta.ilst,boolean,compilation,TRUE
+lyrics,©lyr,moov.udta.meta.ilst,string,lyrics,TRUE
+tempo,tmpo,moov.udta.meta.ilst,number,bpm,TRUE
+advisoryRating,rtng,moov.udta.meta.ilst,string,advisory,TRUE
+gaplessPlayback,pgap,moov.udta.meta.ilst,boolean,gapless,TRUE
+userRating,rate,moov.udta.meta.ilst,string,Rating,TRUE
+sortName,sonm,moov.udta.meta.ilst,string,sortOrder name,TRUE
+sortShow,sosn,moov.udta.meta.ilst,string,sortOrder show,TRUE
+sortAlbum,soal,moov.udta.meta.ilst,string,sortOrder album,TRUE
+sortAlbumArtist,soaa,moov.udta.meta.ilst,string,sortOrder albumartist,TRUE
+sortArtist,soar,moov.udta.meta.ilst,string,sortOrder artist,TRUE
+sortComposer,soco,moov.udta.meta.ilst,string,sortOrder composer,TRUE
+podcast,pcst,moov.udta.meta.ilst,boolean,podcastFlag,TRUE
+category,catg,moov.udta.meta.ilst,string,category,TRUE
+keywords,keyw,moov.udta.meta.ilst,string,keyword,TRUE
+podcastURL,purl,moov.udta.meta.ilst,URL,podcastURL,TRUE
+podcastGUID,egid,moov.udta.meta.ilst,URL,podcastGUID,TRUE
+encodingTool,©too,moov.udta.meta.ilst,string,encodingTool,TRUE
+encodedBy,©enc,moov.udta.meta.ilst,string,encodedBy,TRUE
+artistID,atID,moov.udta.meta.ilst,number,,FALSE
+playListID,plID,moov.udta.meta.ilst,number,,FALSE
+cameraID,cmID,moov.udta.meta.ilst,number,,FALSE
