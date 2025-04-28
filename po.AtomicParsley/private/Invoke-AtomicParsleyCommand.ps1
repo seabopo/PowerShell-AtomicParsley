@@ -53,7 +53,15 @@ function Invoke-AtomicParsleyCommand {
 
                 if ( -not $result.success ) { Throw $result.message }
 
-                if ( $SaveToFile ) { $result.value | Out-File -LiteralPath "FileSystem::$File.txt" }
+              # Sort the atoms and put the iTunMOVI atom at the end of the file for easier comparisons.
+                if ( $SaveToFile ) { 
+                    $result.value | Where-Object { $_.StartsWith('Atom ') -and $_ -notlike "*iTunes;iTunMOVI*" } | 
+                                    Sort-Object | Out-File -LiteralPath "FileSystem::$File.txt"
+                    $result.value | Where-Object { $_.StartsWith('Atom ') -and $_ -like "*iTunes;iTunMOVI*" } | 
+                                    Out-File -LiteralPath "FileSystem::$File.txt" -Append
+                    $result.value | Where-Object { -not $_.StartsWith('Atom ') } | 
+                                    Out-File -LiteralPath "FileSystem::$File.txt" -Append
+                }
 
                 $cleanResult = $result.value | Where-Object { $_ -ne "" }
 
