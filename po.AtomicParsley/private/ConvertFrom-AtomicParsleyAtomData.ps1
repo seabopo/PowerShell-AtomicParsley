@@ -42,7 +42,10 @@ function ConvertFrom-AtomicParsleyAtomData {
 
             Write-Msg -d -il 1 -m $( 'Data appears to be a valid atom.' )
 
-            $id,$value = $( ( $AtomData.Replace('"','').Substring(5).Trim() ) -Split " contains: " )
+           #$id,$value = $( ( $AtomData.Replace('"','').Substring(5).Trim() ) -Split " contains: " )
+            $atomParts = $AtomData -Split ' contains: '
+            $id = $atomParts[0].Replace('"','').Substring(5).Trim()
+            $value = $atomParts[1]
 
             if ( $id.StartsWith('---- [') ) {
                 Write-Msg -d -il 1 -m $( 'ReverseDNS atom found.' )
