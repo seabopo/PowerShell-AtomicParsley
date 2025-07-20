@@ -19,7 +19,7 @@ Set-Variable -Scope 'Script' -Name "PS_MODULE_NAME"  -Value $($PSScriptRoot | Sp
 Set-Variable -Scope 'Script' -Name "AP_INSTALLED"    -Value $false
 Set-Variable -Scope 'Script' -Name "AP_VERSION"      -Value '20240608.083822.1ed9031'
 Set-Variable -Scope 'Script' -Name "AP_ATOMS"        -Value $null
-Set-Variable -Scope 'Script' -Name "AP_ATOMS_PATH"   -Value $(Join-Path -Path $PSScriptRoot -ChildPath 'atoms.csv')
+Set-Variable -Scope 'Script' -Name "AP_ATOMS_PATH"   -Value $(Join-Path -Path $PSScriptRoot -ChildPath 'data/atoms.csv')
 
 if ( $null -eq $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES ) {
     $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $false
@@ -71,3 +71,5 @@ $Script:AP_ATOMS = Import-Csv -Path $Script:AP_ATOMS_PATH -Delimiter ',' | #-Enc
         $_.WriteSupported = [System.Convert]::ToBoolean($_.WriteSupported)
         $_
     }
+
+Export-ModuleMember -Variable AP_ATOMS
