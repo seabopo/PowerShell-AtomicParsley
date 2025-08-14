@@ -12,16 +12,16 @@
 RootModule = 'po.AtomicParsley.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '0.5.0'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Core', 'Desktop')
 
 # ID used to uniquely identify this module
 GUID = '18d13fa3-24ad-49f1-95dd-cf520ae576e7'
 
 # Author of this module
-Author = 'Sean Powell'
+Author = 'Sean Powell (seabopo)'
 
 # Company or vendor of this module
 # CompanyName = ''
@@ -30,10 +30,10 @@ Author = 'Sean Powell'
 Copyright = '(c) Sean Powell. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'A PowerShell module to call AtomicParsley, a lightweight command line program for reading and setting metadata in MPEG-4 files, in particular, iTunes-style metadata. AtomicParsley was written by Wez Furlong and is an open source project available on Github (https://github.com/wez/atomicparsley) under the GPL-2.0 License.'
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '7.4.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -48,7 +48,7 @@ Copyright = '(c) Sean Powell. All rights reserved.'
 # ClrVersion = ''
 
 # Processor architecture (None, X86, Amd64) required by this module
-ProcessorArchitecture = 'None'
+# ProcessorArchitecture = 'None'
 
 # Modules that must be imported into the global environment prior to importing this module
   RequiredModules = @('po.Toolkit')
@@ -95,13 +95,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('AtomicParsley', 'Metadata', 'Metadata Editor', 'iTunes', 'MP4', 'M4V', 'Media', 'Video')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/seabopo/PowerShell-AtomicParsley/blob/main/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/seabopo/PowerShell-AtomicParsley'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -113,17 +113,17 @@ PrivateData = @{
         # Prerelease = ''
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
-        # RequireLicenseAcceptance = $false
+        RequireLicenseAcceptance = $false
 
         # External dependent modules of this module
-        # ExternalModuleDependencies = @()
+        ExternalModuleDependencies = @('po.Toolkit')
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'https://github.com/seabopo/PowerShell-AtomicParsley/blob/main/README.md'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
