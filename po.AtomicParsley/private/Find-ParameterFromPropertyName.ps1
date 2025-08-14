@@ -55,7 +55,13 @@ function Find-ParameterFromPropertyName {
         Write-Msg -d -il 1 -m $( 'Property: {0} => Parameter: {1}' -f $PropertyName, $($name ?? '<Not Found>') )
         Write-Msg -d -il 1 -m $( 'DataType: {0}' -f $type )
 
-        if ( $IncludeDataType ) { return $name,$type } else { return $name }
+        if ( $IncludeDataType ) { 
+            Write-Msg -FunctionResult -m $( 'Property Data: ' ) -o @{ name = $name; type = $type }
+            return $name,$type 
+        } else { 
+            Write-Msg -FunctionResult -m $( 'Property Name: {0}' -f $name  )
+            return $name 
+        }
 
     }
 

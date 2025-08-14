@@ -35,6 +35,8 @@ function Test-AtomicParsleyBinaryExists {
             Write-Msg -x -m $( "{0} `r`n" -f $errMsg ) -o $_
         }
 
+        Write-Msg -FunctionResult -m $( 'Atomic Parsley Found: {0}' -f ($Script:AP_INSTALLED) )
+
         return $Script:AP_INSTALLED
 
     }

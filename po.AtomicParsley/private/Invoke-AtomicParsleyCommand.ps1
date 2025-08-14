@@ -75,6 +75,8 @@ function Invoke-AtomicParsleyCommand {
             Throw 'iTunes data cannot be read or written. AtomicParsley was not found.'
         }
 
+        Write-Msg -FunctionResult -m $( 'Command Result: {0}' -f $cleanResult )
+
         return $cleanResult
 
     }

@@ -62,12 +62,11 @@ function Add-ItunesMovieProperties {
                                 }
             $Atoms.Add($key, $value)
         }
-        
-    }
 
-    end {
-        Write-Msg -r -m $( 'Atoms: ') -o $Atoms
+        Write-Msg -FunctionResult -m $( 'Atoms: ') -o $Atoms
+        
         return $Atoms
+        
     }
 
 }

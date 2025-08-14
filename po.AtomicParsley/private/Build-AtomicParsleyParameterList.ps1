@@ -52,17 +52,10 @@ function Build-AtomicParsleyParameterList {
                         else {
                             $parameter = '--' + $parameterName + ' ' + $propertyValue
                         }
-                        
-                        Write-Msg -FunctionResult -m $( 'Parameter: ' + $parameter )
 
                         $parameters += $parameter
 
                     }
-
-                Write-Msg -p -ps -m $( 'Parameters:' )
-                $parameters | ForEach-Object {
-                    Write-Msg -d -m $_
-                }
 
             }
 
@@ -70,6 +63,8 @@ function Build-AtomicParsleyParameterList {
         catch {
             Write-Msg -x -o $_
         }
+
+        Write-Msg -FunctionResult -m $( 'Parameters: ' ) -o $($parameters | ConvertTo-JSON)
 
         return  $parameters
 

@@ -33,6 +33,8 @@ function Find-PropertyNameFromAtomID {
 
         Write-Msg -d -il 1 -m $( 'AtomID: {0} => Property Name: {1}' -f $AtomID, $($result ?? '<Not Found>') )
 
+        Write-Msg -FunctionResult -m $( 'PropertyName: {0}' -f $result )
+
         return $result
 
     }

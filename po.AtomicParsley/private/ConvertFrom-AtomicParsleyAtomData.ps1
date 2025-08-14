@@ -79,6 +79,8 @@ function ConvertFrom-AtomicParsleyAtomData {
             Write-Msg -d -il 1 -m $( 'Data does not appear to be a valid atom.' )
         }
 
+        Write-Msg -FunctionResult -m $( 'Atom Data: ' ) -o @{ id = $id; value = $value }
+
         return $id,$value
 
     }
