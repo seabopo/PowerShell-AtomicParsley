@@ -72,6 +72,8 @@ function Write-AtomicParsleyAtoms {
             Write-Msg -x -o $_
         }
 
+        Write-Msg -FunctionResult -m $( 'Atoms Written: {0}' -f $returnValue )
+
         return $returnValue
 
     }
