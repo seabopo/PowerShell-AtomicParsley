@@ -5,6 +5,17 @@
 #==================================================================================================================
 
 #==================================================================================================================
+# To-Do
+#==================================================================================================================
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+
+#==================================================================================================================
 # Set Test Variables
 #==================================================================================================================
 
@@ -19,7 +30,7 @@ Clear-Host
 
 $ErrorActionPreference = "Stop"
 
-$env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES = '["Process","Information","Debug"]'
+$env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES = '["Process","Information","Debug","FunctionCall","FunctionResult"]'
 $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $false
 
 Set-Location  -Path $PSScriptRoot
@@ -31,8 +42,7 @@ $mediaPath   = Join-Path -Path $projectPath -ChildPath 'test-media'
 $repoPath    = $((Get-Item $($projectPath)).Parent.FullName)
 $toolkitPath = Join-Path -Path $repoPath -ChildPath 'PowerShell-Toolkit/po.Toolkit'
 
-Import-Module $toolkitPath -Force
-Import-Module $modulePath  -Force
+Import-Module $modulePath -Force
 
 #==================================================================================================================
 # Read and Write AtomicParsley Atoms
@@ -48,11 +58,11 @@ Import-Module $modulePath  -Force
 #
 #==================================================================================================================
 
-Write-Msg -h -ps -b -m $( ' Running AtomicParsley Read/Write Tests' )
+Write-Msg -h -ps -bb -m $( ' Running AtomicParsley Read/Write Tests' )
 
 Get-ChildItem $mediaPath -Recurse -File | 
     Where-Object {  $_.Extension -in $testFileTypes -and $_.Name -notlike '*[X]*' } |
-    Foreach-Object {
+    ForEach-Object {
 
         $path       = $_.FullName
         $directory  = $_.DirectoryName
@@ -92,29 +102,31 @@ Get-ChildItem $mediaPath -Recurse -File |
             if ( $atom -eq 'RawAtomData' ) {
                 Write-Msg -a -il 3 -m $( 'Skipping RawAtomData atom.' )
             }
+            elseif ( $atom -like 'iTunesMovie*' ) {
+                Write-Msg -w -il 3 -m $( 'iTunesMovie properties are supported yet.' )
+            }
             else {
                 Write-Msg -a -il 3 -m $( 'Source value: {0}'  -f $sourceAtoms[$atom])
                 if ( $targetAtoms.ContainsKey( $atom ) ) {
                     Write-Msg -a -il 3 -m $( 'Target value: {0}' -f $targetAtoms[$atom])
-                    if ( $targetAtoms[$atom] -eq $sourceAtoms[$atom] ) {
-                        Write-Msg -a -il 2 -m $( 'Atoms match.' )
-                    }
-                    else {
-                        Write-Msg -e -il 2 -m $( 'Atoms do NOT match.' )
-                    }
+                    $test = $targetAtoms[$atom] -eq $sourceAtoms[$atom]
+                    Write-Msg -sof -il 3 -m $( 'Atoms match: {0}' -f $test ) -ttr $test
                 }
                 else {
                     $testAtom = $AP_ATOMS | Where-Object { $_.PropertyName -eq $atom }
                     if ( [String]::IsNullOrEmpty($testAtom) ) {
-                    Write-Msg -e -il 3 -m $( 'Source atom is not defined in the atoms data file.' )
+                        Write-Msg -e -il 3 -m $( 'Target value: Source atom is not defined in the atoms data file.' )
+                    }
+                    elseif ( $testAtom.WriteSupported -and $testAtom.DataType -eq 'boolean' -and 
+                             $sourceAtoms[$atom] -eq 'false' ) 
+                    {
+                        Write-Msg -w -il 3 -m $( 'Target value: Atomic parsley does not support writing false boolean values' )
+                    }
+                    elseif ( $testAtom.WriteSupported ) {
+                        Write-Msg -e -il 3 -m $( 'Target value: missing' )
                     }
                     else {
-                        if ( $testAtom.WriteSupported ) {
-                            Write-Msg -e -il 3 -m $( 'Target value: missing' )
-                        }
-                        else {
-                            Write-Msg -w -il 3 -m $( 'Atomic parsley does not support writing this atom.' )
-                        }
+                        Write-Msg -w -il 3 -m $( 'Target value: Atomic parsley does not support writing this atom.' )
                     }
                 }
             }
