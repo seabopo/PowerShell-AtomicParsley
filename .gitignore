@@ -1,6 +1,4 @@
 .DS_Store
 .gitignore
-scratch/*
+@scratch/*
 test-media/*
-sample-code/scratch.ps1
-AtomicParsleyVersions.txt
