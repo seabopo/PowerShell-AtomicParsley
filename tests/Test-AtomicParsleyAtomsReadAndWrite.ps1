@@ -21,7 +21,6 @@
 
 $testFileTypes = @('.mp4', '.m4v')
 
-
 #==================================================================================================================
 # Initialize Test Environment
 #==================================================================================================================
@@ -36,11 +35,16 @@ $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $false
 Set-Location  -Path $PSScriptRoot
 Push-Location -Path $PSScriptRoot
 
-$projectPath = ((Get-Location).Path -Replace 'PowerShell-AtomicParsley.*','PowerShell-AtomicParsley')
-$modulePath  = Join-Path -Path $projectPath -ChildPath 'po.AtomicParsley'
-$mediaPath   = Join-Path -Path $projectPath -ChildPath 'test-media'
-$repoPath    = $((Get-Item $($projectPath)).Parent.FullName)
-$toolkitPath = Join-Path -Path $repoPath -ChildPath 'PowerShell-Toolkit/po.Toolkit'
+if (((Get-Location).Path) -match 'PowerShell-[^/\\]*') {
+   $repoName   = $Matches[0]
+   $repoPath   = ((Get-Location).Path -Replace $('{0}.*' -f $repoName),$repoName)
+   $modulePath = Join-Path -Path $repoPath -ChildPath $($repoName.Replace('PowerShell-','po.'))
+   $mediaPath  = Join-Path -Path $repoPath -ChildPath 'test-media'
+}
+else {
+    Write-Host 'Unexpected repo path found. Script execution halted.' -ForegroundColor Red
+    exit
+}
 
 Import-Module $modulePath -Force
 
@@ -51,6 +55,7 @@ Import-Module $modulePath -Force
 # Loop through the test media folder.
 # - Copy each file to a new test file ending with [X] in the name.
 # - Read the atoms from the original file.
+# - Remove the coverArt atom from the atoms as it's not a valid value for writing back to a file.
 # - Wipe the atoms from the new file.
 # - Write the atoms to the new file.
 # - Read the atoms from the new file.
@@ -86,6 +91,7 @@ Get-ChildItem $mediaPath -Recurse -File |
 
         Write-Msg -a -il 1 -m $( 'Reading atoms from source file ...' )
         $sourceAtoms = Read-AtomicParsleyAtoms -File $path -SaveToFile
+        if ( $sourceAtoms.ContainsKey('coverArt') ) { $sourceAtoms.Remove('coverArt') }
         Write-Msg -a -il 2 -m $( 'Complete.' )
 
         Write-Msg -a -il 1 -m $( 'Cleaning file and writing atoms ...' )
@@ -120,7 +126,7 @@ Get-ChildItem $mediaPath -Recurse -File |
                     elseif ( $testAtom.WriteSupported -and $testAtom.DataType -eq 'boolean' -and 
                              $sourceAtoms[$atom] -eq 'false' ) 
                     {
-                        Write-Msg -w -il 3 -m $( 'Target value: Atomic parsley does not support writing false boolean values' )
+                        Write-Msg -w -il 3 -m $( 'Atomic parsley does not support writing false boolean values' )
                     }
                     elseif ( $testAtom.WriteSupported ) {
                         Write-Msg -e -il 3 -m $( 'Target value: missing' )
