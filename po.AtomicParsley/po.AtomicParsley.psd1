@@ -27,7 +27,7 @@ Author = 'Sean Powell (seabopo)'
 # CompanyName = ''
 
 # Copyright statement for this module
-Copyright = '(c) Sean Powell. All rights reserved.'
+Copyright = '(c) Sean Powell. MIT License.'
 
 # Description of the functionality provided by this module
 Description = 'A PowerShell module to call AtomicParsley, a lightweight command line program for reading and setting metadata in MPEG-4 files, in particular, iTunes-style metadata. AtomicParsley was written by Wez Furlong and is an open source project available on Github (https://github.com/wez/atomicparsley) under the GPL-2.0 License.'
