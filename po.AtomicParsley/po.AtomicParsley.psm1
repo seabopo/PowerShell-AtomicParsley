@@ -10,6 +10,7 @@
 
 using namespace System.Collections.Generic
 using namespace System.Collections.Specialized
+using namespace System.Web.HttpUtility
 
 $ErrorActionPreference = "Stop"
 
@@ -26,7 +27,7 @@ if ( $null -eq $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES ) {
 }
 
 if ( $null -eq $env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES ) {
-    $env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES = '["Header","Process","Information","Debug"]'
+    $env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES = '["Header","Process","Information","Debug","FunctionCall","FunctionResult"]'
 }
 
 if ( $null -eq $env:PS_ATOMICPARSLEY_DEFAULTDOMAIN ) {
