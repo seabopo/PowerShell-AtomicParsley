@@ -31,7 +31,7 @@ function Write-AtomicParsleyAtoms {
 
     begin {
 
-        $ignoreList = @( 'RawAtomData', 'coverArt' )
+        $ignoreList = @( 'RawAtomData' )
 
     }
 
@@ -48,8 +48,8 @@ function Write-AtomicParsleyAtoms {
 
             if ( $null -ne $Atoms ) {
 
-                $Atoms.Keys | Where-Object { $_ -like @("iTunesMovie*") } | #-and $_ -ne 'iTunesMovie' } |
-                    ForEach-Object { $ignoreList += $_.ToString() }
+                $Atoms.Keys | Where-Object { $_ -like @("iTunesMovie*") } |
+                              ForEach-Object { $ignoreList += $_.ToString() }
 
                 $parameters = Build-AtomicParsleyParameterList -Atoms $Atoms -IgnoreList $ignoreList
 
