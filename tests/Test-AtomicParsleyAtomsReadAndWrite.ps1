@@ -8,30 +8,11 @@
 # Initialize Test Environment
 #==================================================================================================================
 
-Clear-Host
+# Load the standard test initialization file.
+. $(Join-Path -Path $PSScriptRoot -ChildPath '_init-test-environment.ps1')
 
-$ErrorActionPreference = "Stop"
-
-$env:PS_STATUSMESSAGE_VERBOSE_MESSAGE_TYPES = '["Process","Information","Debug","FunctionCall","FunctionResult"]'
-$env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $false
-
-Set-Location  -Path $PSScriptRoot
-Push-Location -Path $PSScriptRoot
-
-if (((Get-Location).Path) -match 'PowerShell-[^/\\]*') {
-   $repoName   = $Matches[0]
-   $repoPath   = ((Get-Location).Path -Replace $('{0}.*' -f $repoName),$repoName)
-   $modulePath = Join-Path -Path $repoPath  -ChildPath $($repoName.Replace('PowerShell-','po.'))
-   $mediaPath  = Join-Path -Path $repoPath  -ChildPath 'sample-media'
-   $tvShowPath = Join-Path -Path $mediaPath -ChildPath 'TVShows'
-   $moviePath  = Join-Path -Path $mediaPath -ChildPath 'Movies'
-}
-else {
-    Write-Host 'Unexpected repo path found. Script execution halted.' -ForegroundColor Red
-    exit
-}
-
-Import-Module $modulePath -Force
+# Override the Default Debug Logging Setting
+  # $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $true
 
 #==================================================================================================================
 # Run Tests
