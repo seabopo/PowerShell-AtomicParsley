@@ -1,4 +1,5 @@
 .DS_Store
 .gitignore
 @scratch/*
-test-media/*
+sample-media/*
+@publish/*

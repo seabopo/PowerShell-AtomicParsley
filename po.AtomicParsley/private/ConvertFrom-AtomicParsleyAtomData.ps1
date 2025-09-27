@@ -9,7 +9,7 @@ function ConvertFrom-AtomicParsleyAtomData {
     .PARAMETER AtomData
         REQUIRED. String. Alias: -d. A string containing a single set of atom data as returned by AtomicParsley.
 
-        Example Data (the function expect a single line on each call):
+        Example Data (the function expects a single line on each call):
             Atom "©nam" contains: Movie Title
             Atom "gnre" contains: Comedy
             Atom "©day" contains: 2019-06-14T07:00:00Z

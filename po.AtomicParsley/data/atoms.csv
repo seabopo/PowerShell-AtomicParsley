@@ -12,7 +12,7 @@ tvSeasonNumber,tvsn,moov.udta.meta.ilst,number,TVSeasonNum,TRUE
 tvEpisodeNumber,tves,moov.udta.meta.ilst,number,TVEpisodeNum,TRUE
 tvEpisodeID,tven,moov.udta.meta.ilst,string,TVEpisode,TRUE
 tvNetwork,tvnn,moov.udta.meta.ilst,string,TVNetwork,TRUE
-storeDescription,sdes,moov.udta.meta.ilst,string,storedesc,TRUE
+tvSeasonDescription,sdes,moov.udta.meta.ilst,string,storedesc,TRUE
 artist,©ART,moov.udta.meta.ilst,string,artist,TRUE
 albumArtist,aART,moov.udta.meta.ilst,string,albumArtist,TRUE
 composer,©wrt,moov.udta.meta.ilst,string,composer,TRUE
