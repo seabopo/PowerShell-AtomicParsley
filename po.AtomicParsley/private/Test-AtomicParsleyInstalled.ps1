@@ -1,4 +1,4 @@
-function Test-AtomicParsleyBinaryExists {
+function Test-AtomicParsleyInstalled {
     <#
     .DESCRIPTION
         Determines if the AtomicParsley binary is installed and available in the system path.
@@ -7,7 +7,7 @@ function Test-AtomicParsleyBinaryExists {
         Boolean. True if the AtomicParsley binary is installed and available in the system path, otherwise false.
 
     .EXAMPLE
-        Test-AtomicParsleyBinaryExists
+        Test-AtomicParsleyInstalled
     #>
     [OutputType([Bool])]
     [CmdletBinding()]

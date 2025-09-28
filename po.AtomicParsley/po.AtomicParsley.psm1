@@ -64,7 +64,7 @@
 # Validate AtomicParsley Binary Initialization
 #==================================================================================================================
 
-    if ( -not $( Test-AtomicParsleyBinaryExists ) ) {
+    if ( -not $( Test-AtomicParsleyInstalled ) ) {
         Show-MissingBinaryMessage
     }
 
