@@ -4,8 +4,7 @@ function Read-AtomicParsleyAtoms {
         Returns a collection of iTunes-style metadata from an mp3 or mp4 media file.
 
     .OUTPUTS
-        A [System.Collections.Generic.SortedDictionary[string,string]] containing the iTunes-style metadata from 
-        the file specified in the File parameter.
+        A Hashtable containing the iTunes-style metadata from the specified file.
 
     .PARAMETER File
         REQUIRED. String. Alias: -f. The fully-qualified file path of a file containing iTunes-style metadata.
@@ -21,7 +20,7 @@ function Read-AtomicParsleyAtoms {
     .EXAMPLE
         Read-AtomicParsleyAtoms -p 'C:\myfile.mp4' -s
     #>
-    [OutputType([SortedDictionary[String,String]])]
+    [OutputType([Hashtable])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)] [Alias('f')] [String] $File,

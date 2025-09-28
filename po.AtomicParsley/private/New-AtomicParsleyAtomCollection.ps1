@@ -5,7 +5,7 @@ function New-AtomicParsleyAtomCollection {
         by the AtomicParsley --metadata command.
 
     .OUTPUTS
-        [System.Collections.Generic.SortedDictionary[string,string]] of metadata atoms.
+        A Hashtable of metadata atoms.
 
     .PARAMETER AtomData
         REQUIRED. String. Alias: -d. A string containing a single line item of atom data returned by the
@@ -30,14 +30,14 @@ function New-AtomicParsleyAtomCollection {
         The function processes the atom data one line at a time and returns the hashtable
         only after the pipeline has completed.
     #>
-    [OutputType([SortedDictionary[String,String]])]
+    [OutputType([Hashtable])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory,ValueFromPipeline)] [Alias('d')] [String] $AtomData
     )
 
     begin {
-        $AtomCollection = [SortedDictionary[String,String]]::new()
+        $AtomCollection = [Hashtable]::new()
         $AtomCollection.Add( 'RawAtomData', "" )
     }
 

@@ -4,21 +4,20 @@ function Add-ItunesMovieProperties {
         Adds a set of properties to the atoms collection based on the lists embedded in the iTunesMovie property.
 
     .OUTPUTS
-        [System.Collections.Generic.SortedDictionary[string,string]] of metadata atoms.
+        [Hashtable] of metadata atoms.
 
     .PARAMETER Atoms
-        REQUIRED. SortedDictionary[String,String]. Alias: -a. An ordered dictionary containing 
-        a set of metadata / atoms.
+        REQUIRED. Hashtable. Alias: -a. A Hashtable containing a set of metadata / atoms.
 
     .EXAMPLE
         $atoms | Add-ItunesMovieProperties
 
     #>
-    [OutputType([SortedDictionary[String,String]])]
+    [OutputType([Hashtable])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory,ValueFromPipeline)] [Alias('a')] 
-        [SortedDictionary[String,String]] $Atoms
+        [Parameter(Mandatory,ValueFromPipeline)] [Alias('a')]
+        [Hashtable] $Atoms
     )
 
     process {

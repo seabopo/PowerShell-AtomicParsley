@@ -7,8 +7,7 @@ function Build-AtomicParsleyParameterList {
         Array of strings containing the parameters to be passed to AtomicParsley.
 
     .PARAMETER Atoms
-        OPTIONAL. System.Collections.Generic.SortedDictionary. Alias: -a. An ordered dictionary containing 
-        a set of metadata / atoms.
+        REQUIRED. Hashtable. Alias: -a. A Hashtable containing a set of metadata / atoms.
 
     .PARAMETER IgnoreList
         OPTIONAL. Array of String. Alias: -i. A list of parameter names to ignore when creating the parameter list.
@@ -20,7 +19,7 @@ function Build-AtomicParsleyParameterList {
     [OutputType([String[]])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [Alias('a')] [SortedDictionary[String,String]] $Atoms,
+        [Parameter(Mandatory)] [Alias('a')] [Hashtable] $Atoms,
         [Parameter()]          [Alias('i')] [String[]] $IgnoreList
     )
 

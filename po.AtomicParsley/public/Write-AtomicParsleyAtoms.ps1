@@ -10,8 +10,7 @@ function Write-AtomicParsleyAtoms {
          REQUIRED. String. Alias: -f. The fully-qualified file path of a file to write iTunes-style metadata.
 
     .PARAMETER Atoms
-        OPTIONAL. System.Collections.Generic.SortedDictionary. Alias: -a. An ordered dictionary containing 
-        a set of metadata / atoms.
+        OPTIONAL. Hashtable. Alias: -a. A collection of metadata / atoms in name/value pairs.
 
     .PARAMETER RemoveAll
         OPTIONAL. Switch. Alias: -r. Removes all metadata from the file. If both this parameter and the atoms
@@ -25,7 +24,7 @@ function Write-AtomicParsleyAtoms {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)] [Alias('f')] [String] $File,
-        [Parameter()]          [Alias('a')] [SortedDictionary[String,String]] $Atoms,
+        [Parameter()]          [Alias('a')] [Hashtable] $Atoms,
         [Parameter()]          [Alias('r')] [Switch] $RemoveAll
     )
 

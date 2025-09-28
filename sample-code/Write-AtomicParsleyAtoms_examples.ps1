@@ -57,7 +57,7 @@ using namespace System.Collections.Specialized
             Write-Msg -a -il 1 -m $( 'Test File Found: {0}' -f $targetPath )
         }
 
-        $newAtoms = [SortedDictionary[String,String]]@{
+        $newAtoms = [Hashtable]@{
             title         = 'Abominable (2019)'
             mediaType     = 'Movie'
             artist        = 'Jill Culton'
@@ -80,7 +80,7 @@ using namespace System.Collections.Specialized
         $testAtoms.remove('coverArt') | Out-Null
         Write-Msg -s -ps -m $( 'TEST File Atoms:' )
         $testAtoms.keys | ForEach-Object {
-            Write-Msg -a -m $( '{0}: {1}' -f $_, $atoms[$_] )
+            Write-Msg -a -m $( '{0}: {1}' -f $_, $testAtoms[$_] )
         }
 
     }
