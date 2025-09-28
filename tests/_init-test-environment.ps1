@@ -19,7 +19,7 @@ if (((Get-Location).Path) -match 'PowerShell-[^/\\]*') {
     $repoPath   = ((Get-Location).Path -Replace $('{0}.*' -f $repoName),$repoName)
     $reposPath  = ((Get-Location).Path -Replace $('{0}.*' -f $repoName),'')
     $modulePath = Join-Path -Path $repoPath -ChildPath $($repoName.Replace('PowerShell-','po.'))
-    $mediaPath  = Join-Path -Path $repoPath  -ChildPath 'sample-media'
+    $mediaPath  = Join-Path -Path $reposPath -ChildPath 'sample-media'
 }
 else {
     Write-Host 'Unexpected repo path found. Script execution halted.' -ForegroundColor Red

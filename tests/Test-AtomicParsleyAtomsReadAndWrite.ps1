@@ -24,7 +24,7 @@
 
 $testFileTypes = @('.mp4', '.m4v')
 
-Get-ChildItem $mediaPath -Recurse -File | 
+Get-ChildItem $mediaPath -Recurse -Depth 2 -File |
     Where-Object {  $_.Extension -in $testFileTypes -and $_.Name -notlike '*`[TEST-COPY`]*' } |
     ForEach-Object {
 
@@ -48,7 +48,7 @@ Get-ChildItem $mediaPath -Recurse -File |
         }
 
         Write-Msg -a -il 1 -m $( 'Reading atoms from SOURCE file ...' )
-        $sourceAtoms = Read-AtomicParsleyAtoms -File $path -SaveToFile
+        $sourceAtoms = Read-AtomicParsleyAtoms -File $path # -SaveToFile
         if ( $sourceAtoms.ContainsKey('coverArt') ) { 
             $sourceAtoms.Remove('coverArt') | Out-Null
             Write-Msg -a -il 3 -m $( 'Removing coverArt atom.' )

@@ -18,9 +18,35 @@
 # Run Tests
 #==================================================================================================================
 
-#---------------------------
+#---------------------------------------
+# Repo TV Show Test
+#---------------------------------------
+#
+# Please see the ReadMe file for information about file/folder permissions on MacOS.
+# https://github.com/seabopo/PowerShell-AtomicParsley/blob/main/README.md
+#
+    $testFileName = 'TVShows/Breaking In - s01e06 - Breaking Out [1080p WS iTunes HD DD].m4v'
+    $testFilePath = Join-Path -Path $mediaPath -ChildPath $testFileName
+    $atoms = Read-AtomicParsleyAtoms -File $testFilePath
+    $atoms
+    exit
+
+#-----------------------------------------
+# Repo Movie Test
+#-----------------------------------------
+#
+# This sample assumes you have connected to a network share named 'Media' and it is available on your desktop.
+#
+    $testFileName = 'Movies/Abominable (2019) [1080p WS iTunes+ HD DD].m4v'
+    $testFilePath = Join-Path -Path $mediaPath -ChildPath $testFileName
+    $atoms = Read-AtomicParsleyAtoms -File $testFilePath
+    $atoms
+    $atoms.iTunesMovie
+    exit
+
+#---------------------------------------
 # Local File Test for MacOS
-#---------------------------
+#---------------------------------------
 #
 # Please see the ReadMe file for information about file/folder permissions on MacOS.
 # https://github.com/seabopo/PowerShell-AtomicParsley/blob/main/README.md
@@ -31,9 +57,9 @@
     $atoms.iTunesMovie
     exit
 
-#-----------------------------
+#-----------------------------------------
 # Network File Test for MacOS
-#-----------------------------
+#-----------------------------------------
 #
 # This sample assumes you have connected to a network share named 'Media' and it is available on your desktop.
 #
