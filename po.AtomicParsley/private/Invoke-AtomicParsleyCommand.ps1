@@ -7,7 +7,7 @@ function Invoke-AtomicParsleyCommand {
         A string array containing the results of the command.
 
     .PARAMETER File
-        REQUIRED. String. Alias: -p. The fully-qualified file path of a file with to read or write iTunes metadata.
+        REQUIRED. String. Alias: -f. The fully-qualified file path of a file with to read or write iTunes metadata.
 
     .PARAMETER Command
         REQUIRED. String. Alias: -c. The command line that AtomicParsley should execute. The default value of
@@ -22,7 +22,7 @@ function Invoke-AtomicParsleyCommand {
         Invoke-AtomicParsleyCommand -File 'C:\myfile.mp4' -Command '--textdata' -SaveToFile
 
     .EXAMPLE
-        Invoke-AtomicParsleyCommand -p 'C:\myfile.mp4' -c '--textdata' -s
+        Invoke-AtomicParsleyCommand -f 'C:\myfile.mp4' -c '--textdata' -s
 
     .NOTES
         Results are returned as a string array of console line results.
