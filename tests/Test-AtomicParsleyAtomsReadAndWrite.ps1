@@ -12,7 +12,7 @@
 . $(Join-Path -Path $PSScriptRoot -ChildPath '_init-test-environment.ps1')
 
 # Override the Default Debug Logging Setting
-  # $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $true
+  $env:PS_STATUSMESSAGE_SHOW_VERBOSE_MESSAGES = $true
 
 #==================================================================================================================
 # Run Tests
@@ -24,7 +24,7 @@
 
 $testFileTypes = @('.mp4', '.m4v')
 
-Get-ChildItem $mediaPath -Recurse -Depth 2 -File |
+Get-ChildItem $moviePath -Recurse -Depth 2 -File |
     Where-Object {  $_.Extension -in $testFileTypes -and $_.Name -notlike '*`[TEST-COPY`]*' } |
     ForEach-Object {
 
@@ -47,55 +47,73 @@ Get-ChildItem $mediaPath -Recurse -Depth 2 -File |
             Write-Msg -a -il 1 -m $( 'TEST file exists: {0}' -f $targetName )
         }
 
-        Write-Msg -a -il 1 -m $( 'Reading atoms from SOURCE file ...' )
-        $sourceAtoms = Read-AtomicParsleyAtoms -File $path # -SaveToFile
+        Write-Msg -p -fw -ps -m $( 'Reading atoms from SOURCE file ...' )
+        $r = Read-AtomicParsleyAtoms -File $path # -SaveToFile
+        if ( $r.success ) {
+            $sourceAtoms = $r.value
+        }
+        else {
+            Write-Msg -e -m $r.message
+            exit
+        }
         if ( $sourceAtoms.ContainsKey('coverArt') ) { 
             $sourceAtoms.Remove('coverArt') | Out-Null
-            Write-Msg -a -il 3 -m $( 'Removing coverArt atom.' )
+            Write-Msg -a -il 1 -m $( 'Removing coverArt atom.' )
         }
         if ( $sourceAtoms.ContainsKey('RawAtomData') ) { 
             $sourceAtoms.Remove('RawAtomData') | Out-Null
-            Write-Msg -a -il 3 -m $( 'Removing RawAtomData atom.' )
+            Write-Msg -a -il 1 -m $( 'Removing RawAtomData atom.' )
         }
-        Write-Msg -d -il 2 -m $( 'Complete.' )
+        Write-Msg -d -il 1 -m $( 'Complete.' )
 
-        Write-Msg -a -il 1 -m $( 'Cleaning TEST file and writing atoms ...' )
-        Write-AtomicParsleyAtoms -File $targetPath -Atoms $sourceAtoms -RemoveAll | Out-Null
-        Write-Msg -d -il 2 -m $( 'Complete.' )
+        Write-Msg -p -ps -fw -m $( 'Cleaning TEST file and writing atoms ...' )
+         $r = Write-AtomicParsleyAtoms -File $targetPath -Atoms $sourceAtoms -RemoveAll
+        Write-Msg -d -il 1 -m $( 'Complete.' )
+        if ( -not $r.success ) {
+            Write-Msg -e -m $r.message
+            exit
+        }
 
-        Write-Msg -a -il 1 -m $( 'Reading atoms from TEST file ...' )
-        $targetAtoms = Read-AtomicParsleyAtoms -File $targetPath -SaveToFile 
-        Write-Msg -d -il 2 -m $( 'Complete.' )
+        Write-Msg -p -ps -fw  -m $( 'Reading atoms from TEST file ...' )
+        $r = Read-AtomicParsleyAtoms -File $targetPath -SaveToFile 
+        Write-Msg -d -il 1 -m $( 'Complete.' )
+        if ( $r.success ) {
+            $targetAtoms = $r.value
+        }
+        else {
+            Write-Msg -e -m $r.message
+            exit
+        }
 
-        Write-Msg -a -il 1 -m $( 'Comparing atoms ...' )
+        Write-Msg -p -ps -fw -m $( 'Comparing atoms ...' )
         foreach ( $atom in $sourceAtoms.keys ) {
-            Write-Msg -a -il 2 -m $( 'Checking atom: {0}' -f $atom)
+            Write-Msg -a -il 1 -m $( 'Checking atom: {0}' -f $atom)
             if ( $atom -like 'iTunesMovie*' ) {
-                Write-Msg -w -il 3 -m $( 'iTunesMovie properties are not supported yet.' )
+                Write-Msg -w -il 2 -m $( 'iTunesMovie properties are not supported yet.' )
             }
             else {
                 if ( $targetAtoms.ContainsKey( $atom ) ) {
                     $test = $targetAtoms[$atom] -eq $sourceAtoms[$atom]
-                    Write-Msg -d -il 3 -m $( 'Source value: {0}'  -f $sourceAtoms[$atom]) -fw:$(-not $test)
-                    Write-Msg -d -il 3 -m $( 'Target value: {0}'  -f $targetAtoms[$atom]) -fw:$(-not $test)
-                    Write-Msg -sof -il 3 -m $( 'Atoms match: {0}' -f $test ) -ttr $test
+                    Write-Msg -d -il 2 -m $( 'Source value: {0}'  -f $sourceAtoms[$atom]) -fw:$(-not $test)
+                    Write-Msg -d -il 2 -m $( 'Target value: {0}'  -f $targetAtoms[$atom]) -fw:$(-not $test)
+                    Write-Msg -sof -il 2 -m $( 'Atoms match: {0}' -f $test ) -ttr $test
                 }
                 else {
-                    Write-Msg -d -il 3 -m $( 'Source value: {0}'  -f $sourceAtoms[$atom])
+                    Write-Msg -d -il 2 -m $( 'Source value: {0}'  -f $sourceAtoms[$atom])
                     $testAtom = $AP_ATOMS | Where-Object { $_.PropertyName -eq $atom }
-                    if ( [String]::IsNullOrEmpty($testAtom) ) {
-                        Write-Msg -e -il 3 -m $( 'Target value: Source atom is not defined in the atoms data file.' )
+                    if ( -not $testAtom.WriteSupported ) {
+                        Write-Msg -w -il 2 -m $( 'Target value: Atomic parsley does not support writing this atom.' )
                     }
-                    elseif ( $testAtom.WriteSupported -and $testAtom.DataType -eq 'boolean' -and 
-                             $sourceAtoms[$atom] -eq 'false' ) 
-                    {
-                        Write-Msg -w -il 3 -m $( 'Atomic parsley does not support writing false boolean values.' )
+                    elseif ( [String]::IsNullOrEmpty($sourceAtoms[$atom]) ) {
+                        Write-Msg -d -il 2 -m $( 'Target value: <not in collection>')
+                        Write-Msg -w -il 2 -m $( 'AtomicParsley removes an atom when the value is null.' )
                     }
-                    elseif ( $testAtom.WriteSupported ) {
-                        Write-Msg -e -il 3 -m $( 'Target value: missing' )
+                    elseif ( $testAtom.DataType -eq 'boolean' -and $sourceAtoms[$atom] -eq 'false' ) {
+                        Write-Msg -d -il 2 -m $( 'Target value: <not in collection>')
+                        Write-Msg -w -il 2 -m $( 'Atomic parsley does not support writing false boolean atoms.' )
                     }
                     else {
-                        Write-Msg -w -il 3 -m $( 'Target value: Atomic parsley does not support writing this atom.' )
+                        Write-Msg -e -il 2 -m $( 'Target value: Source atom is not defined in the atoms data file.' )
                     }
                 }
             }

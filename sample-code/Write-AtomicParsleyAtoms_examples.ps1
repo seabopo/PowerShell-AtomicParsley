@@ -31,11 +31,11 @@ using namespace System.Collections.Specialized
     Write-Msg -p -fw -ps -m $( 'Processing SOURCE file: {0}' -f $file.Name )
 
     if ( -not (Test-Path -LiteralPath $testFilePath) ) {
-        Write-Msg -e -ps -m $( 'Source file does not exist: {0}' -f $testFilePath )
+        Write-Msg -e -il 1 -m $( 'Source file does not exist: {0}' -f $testFilePath )
     }
     else {
         
-        Write-Msg -s -ps -m $( 'Source file found: {0}' -f $testFilePath )
+        Write-Msg -s -il 1 -m $( 'Source file found: {0}' -f $testFilePath )
 
         $file       = Get-Item -LiteralPath $testFilePath
         $path       = $file.FullName
@@ -54,7 +54,7 @@ using namespace System.Collections.Specialized
             Copy-Item -LiteralPath $path -Destination $targetPath | Out-Null
         }
         else {
-            Write-Msg -a -il 1 -m $( 'Test File Found: {0}' -f $targetPath )
+            Write-Msg -s -il 1 -m $( 'Test File Found: {0}' -f $targetPath )
         }
 
         $newAtoms = [Hashtable]@{
@@ -68,19 +68,30 @@ using namespace System.Collections.Specialized
             releaseDate   = '2019-09-27T07:00:00Z'
         }
 
-        Write-Msg -a -il 1 -m $( 'Cleaning TEST file and writing atoms ...' )
-        Write-AtomicParsleyAtoms -File $targetPath -Atoms $newAtoms -RemoveAll | Out-Null
-        Write-Msg -d -il 2 -m $( 'Complete.' )
+        Write-Msg -p -fw -ps -m $( 'Atoms to write to file:' )
+        $newAtoms.keys | Sort-Object | ForEach-Object {
+            Write-Msg -a -il 1 -m $( '{0}: {1}' -f $_, $newAtoms[$_] )
+        }
 
-        Write-Msg -a -il 1 -m $( 'Reading atoms from TEST file ...' )
-        $testAtoms = Read-AtomicParsleyAtoms -File $targetPath # -SaveToFile 
+        Write-Msg -p -fw -ps -m $( 'Cleaning TEST file and writing atoms ...' )
+        $r = Write-AtomicParsleyAtoms -File $targetPath -Atoms $newAtoms -RemoveAll
         Write-Msg -d -il 2 -m $( 'Complete.' )
+        if ( -not $r.success ) {
+            Write-Msg -e -m $r.message
+            exit
+        }
 
-        $testAtoms.remove('RawAtomData') | Out-Null
-        $testAtoms.remove('coverArt') | Out-Null
-        Write-Msg -s -ps -m $( 'TEST File Atoms:' )
-        $testAtoms.keys | ForEach-Object {
-            Write-Msg -a -m $( '{0}: {1}' -f $_, $testAtoms[$_] )
+        Write-Msg -p -fw -ps -m $( 'Reading atoms from TEST file ...' )
+        $r = Read-AtomicParsleyAtoms -File $targetPath # -SaveToFile
+        Write-Msg -d -il 2 -m $( 'Complete.' )
+        if ( $r.success ) {
+            $testAtoms = $r.value
+            $testAtoms.remove('RawAtomData') | Out-Null
+            $testAtoms.remove('coverArt') | Out-Null
+            Write-Msg -p -fw -ps -m $( 'TEST File Atoms:' )
+            $testAtoms.keys | Sort-Object | ForEach-Object {
+                Write-Msg -a -il 1 -m $( '{0}: {1}' -f $_, $testAtoms[$_] )
+            }
         }
 
     }

@@ -46,38 +46,38 @@ function Invoke-AtomicParsleyCommand {
                 Write-Msg -d -il 1 -m $( 'File Exists: {0}' -f $File )
 
                 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-                $cmd = $( "AtomicParsley `"{0}`" {1}" -f $File, $Command )
-                $result = Invoke-Cmd -c $cmd -r 0
+                $r = Invoke-Cmd -c $( "AtomicParsley `"{0}`" {1}" -f $File, $Command ) -r 0 -x
 
-                Write-Msg -d -m 'Command Result: ' -il 1 -o $result
+                Write-Msg -d -m 'Command Result: ' -il 1 -o $r
 
-                if ( -not $result.success ) { Throw $result.message }
-
-              # Sort the atoms and put the iTunMOVI atom at the end of the file for easier comparisons.
-                if ( $SaveToFile ) { 
-                    $result.value | Where-Object { $_.StartsWith('Atom ') -and $_ -notlike "*iTunes;iTunMOVI*" } | 
+                if ( $r.success ) {
+                    $result = @{ success = $true; value = $( $r.value | Where-Object { $_ -ne "" } ) }
+                    if ( $SaveToFile ) { 
+                        $r.value | Where-Object { $_.StartsWith('Atom ') -and $_ -notlike "*iTunes;iTunMOVI*" } | 
                                     Sort-Object | Out-File -LiteralPath "FileSystem::$File.txt"
-                    $result.value | Where-Object { $_.StartsWith('Atom ') -and $_ -like "*iTunes;iTunMOVI*" } | 
+                        $r.value | Where-Object { $_.StartsWith('Atom ') -and $_ -like "*iTunes;iTunMOVI*" } | 
                                     Out-File -LiteralPath "FileSystem::$File.txt" -Append
-                    $result.value | Where-Object { -not $_.StartsWith('Atom ') } | 
+                        $r.value | Where-Object { -not $_.StartsWith('Atom ') } | 
                                     Out-File -LiteralPath "FileSystem::$File.txt" -Append
+                    }
                 }
-
-                $cleanResult = $result.value | Where-Object { $_ -ne "" }
+                else {
+                    $result = @{ success = $false; message = $r.message }
+                }
 
             }
             else {
-                Throw $('The specified file was not found: {0}' -f $File)
+                $result = @{ success = $false; message = $('The specified file was not found: {0}' -f $File) }
             }
             
         }
         else {
-            Throw 'iTunes data cannot be read or written. AtomicParsley was not found.'
+            $result = @{ success = $false; message = 'Meta-data cannot be read or written. AtomicParsley was not found.' }
         }
 
-        Write-Msg -FunctionResult -m $( 'Command Result: {0}' -f $cleanResult )
+        Write-Msg -FunctionResult -m $('Command Result: ') -o $result
 
-        return $cleanResult
+        return $result
 
     }
 }

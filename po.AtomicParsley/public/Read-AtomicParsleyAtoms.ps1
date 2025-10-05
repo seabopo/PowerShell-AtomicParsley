@@ -33,16 +33,25 @@ function Read-AtomicParsleyAtoms {
 
             Write-Msg -FunctionCall -IncludeParameters
 
-            $File |
-                Invoke-AtomicParsleyCommand -Command '--textdata' -SaveToFile:$SaveToFile |
-                    Merge-MultiLineAtoms |
-                        New-AtomicParsleyAtomCollection |
-                            Add-ItunesMovieProperties
-
+            $r = $File | Invoke-AtomicParsleyCommand -Command '--textdata' -SaveToFile:$SaveToFile 
+            if ( $r.success ) {
+                $atoms = $r.value | Merge-MultiLineAtoms | 
+                                    New-AtomicParsleyAtomCollection | 
+                                    Add-ItunesMovieProperties
+                $result = @{ success = $true; value = $atoms }
+            }
+            else {
+                $result = $r
+            }
+            
         }
         catch {
-            Write-Msg -x -o $_
+            $result = @{ success = $false; message = $_.Exception.Message; trace = $_.ScriptStackTrace }
         }
+
+        Write-Msg -FunctionResult -m $( 'Command Result: ' ) -o $result
+
+        return $result
 
     }
 

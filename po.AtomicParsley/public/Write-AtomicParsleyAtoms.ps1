@@ -40,12 +40,14 @@ function Write-AtomicParsleyAtoms {
 
             Write-Msg -FunctionCall -IncludeParameters
 
+            $r = @{ success = $true }
+
             if ( $RemoveAll ) {
                 $cmd = '--metaEnema --overWrite'
-                Invoke-AtomicParsleyCommand -Command $cmd -File $File | Out-Null
+                $r = Invoke-AtomicParsleyCommand -Command $cmd -File $File
             }
 
-            if ( $null -ne $Atoms ) {
+            if ( $r.success -and $null -ne $Atoms ) {
 
                 $Atoms.Keys | Where-Object { $_ -like @("iTunesMovie*") } |
                               ForEach-Object { $ignoreList += $_.ToString() }
@@ -59,21 +61,20 @@ function Write-AtomicParsleyAtoms {
                     Write-Msg -d -m $_
                 }
 
-                Invoke-AtomicParsleyCommand -Command ($parameters -Join ' ') -File $File | Out-Null
+                $r = Invoke-AtomicParsleyCommand -Command ($parameters -Join ' ') -File $File
 
             }
 
-            $returnValue = $true
+            $result = $r
 
         }
         catch {
-            $returnValue = $false
-            Write-Msg -x -o $_
+            $result = @{ success = $false; message = $_.Exception.Message; trace = $_.ScriptStackTrace }
         }
 
-        Write-Msg -FunctionResult -m $( 'Atoms Written: {0}' -f $returnValue )
+        Write-Msg -FunctionResult -m $( 'Command Result: ' ) -o $result
 
-        return $returnValue
+        return $result
 
     }
 
