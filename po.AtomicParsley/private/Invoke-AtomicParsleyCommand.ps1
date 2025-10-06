@@ -75,7 +75,7 @@ function Invoke-AtomicParsleyCommand {
             $result = @{ success = $false; message = 'Meta-data cannot be read or written. AtomicParsley was not found.' }
         }
 
-        Write-Msg -FunctionResult -m $('Command Result: ') -o $result
+        Write-Msg -FunctionResult -o $result
 
         return $result
 

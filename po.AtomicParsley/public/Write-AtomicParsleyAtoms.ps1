@@ -72,7 +72,7 @@ function Write-AtomicParsleyAtoms {
             $result = @{ success = $false; message = $_.Exception.Message; trace = $_.ScriptStackTrace }
         }
 
-        Write-Msg -FunctionResult -m $( 'Command Result: ' ) -o $result
+        Write-Msg -FunctionResult -o $result
 
         return $result
 
