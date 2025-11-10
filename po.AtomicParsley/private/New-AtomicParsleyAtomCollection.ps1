@@ -37,7 +37,7 @@ function New-AtomicParsleyAtomCollection {
     )
 
     begin {
-        $AtomCollection = [Hashtable]::new()
+        $AtomCollection = [Hashtable] @{}
         $AtomCollection.Add( 'RawAtomData', "" )
     }
 

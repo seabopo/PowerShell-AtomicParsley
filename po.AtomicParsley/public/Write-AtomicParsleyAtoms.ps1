@@ -23,9 +23,9 @@ function Write-AtomicParsleyAtoms {
     [OutputType([Boolean])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [Alias('f')] [String] $File,
+        [Parameter(Mandatory)] [Alias('f')] [String]    $File,
         [Parameter()]          [Alias('a')] [Hashtable] $Atoms,
-        [Parameter()]          [Alias('r')] [Switch] $RemoveAll
+        [Parameter()]          [Alias('r')] [Switch]    $RemoveAll
     )
 
     begin {

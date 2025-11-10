@@ -48,6 +48,9 @@ function Build-AtomicParsleyParameterList {
                         if ( $parameterName.StartsWith('name=') ) {
                             $parameter = '--rDNSatom ' + $propertyValue + ' ' + $parameterName
                         }
+                        elseif ( $parameterName -eq 'artwork' ) {
+                            $parameter   = '--artwork REMOVE_ALL --artwork ' + $propertyValue
+                        }
                         else {
                             $parameter = '--' + $parameterName + ' ' + $propertyValue
                         }
