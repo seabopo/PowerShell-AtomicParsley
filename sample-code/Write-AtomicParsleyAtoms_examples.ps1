@@ -66,6 +66,7 @@ using namespace System.Collections.Specialized
             genre         = 'Kids & Family'
             hdVideo       = '2'
             releaseDate   = '2019-09-27T07:00:00Z'
+            flavor        = '18:1080p'
         }
 
         Write-Msg -p -fw -ps -m $( 'Atoms to write to file:' )
@@ -74,7 +75,7 @@ using namespace System.Collections.Specialized
         }
 
         Write-Msg -p -fw -ps -m $( 'Cleaning TEST file and writing atoms ...' )
-        $r = Write-AtomicParsleyAtoms -File $targetPath -Atoms $newAtoms -RemoveAll
+        $r = Write-AtomicParsleyAtoms -File $targetPath -Atoms $newAtoms #-RemoveAll
         Write-Msg -d -il 2 -m $( 'Complete.' )
         if ( -not $r.success ) {
             Write-Msg -e -m $r.message

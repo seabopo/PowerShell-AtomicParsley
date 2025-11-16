@@ -30,6 +30,7 @@ function Find-ParameterFromPropertyName {
         Write-Msg -FunctionCall -IncludeParameters
 
         $atom = $Script:AP_ATOMS | Where-Object { $_.PropertyName -eq $PropertyName }
+        
         if ( [String]::IsNullOrEmpty($atom) ) {
             Write-Msg -d -il 1 -m $( 'Custom Atom Found: {0}' -f $PropertyName )
             $type = 'string'
@@ -43,13 +44,21 @@ function Find-ParameterFromPropertyName {
         }
         else {
             Write-Msg -d -il 1 -m $( 'Known Atom Found: {0}' -f $PropertyName )
-            $type = $atom.DataType
-            if ( [String]::IsNullOrEmpty($atom.ParameterName) ) {
-                $name = 'name={0} domain={1}' -f $atom.AtomID, $atom.AtomDomain
+            if ( $atom.WriteSupported ) {
+                $type = $atom.DataType
+                if ( [String]::IsNullOrEmpty($atom.ParameterName) ) {
+                    $name = 'name={0} domain={1}' -f $atom.AtomID, $atom.AtomDomain
+                }
+                else {
+                    $name = $atom.ParameterName
+                }
             }
             else {
-                $name = $atom.ParameterName
+                Write-Msg -d -il 2 -m $( 'Writing of this atom not supported: {0}' -f $PropertyName )
+                $name = $atom.PropertyName
+                $type = 'WriteNotSupported'
             }
+
         }
 
         Write-Msg -d -il 1 -m $( 'Property: {0} => Parameter: {1}' -f $PropertyName, $($name ?? '<Not Found>') )

@@ -37,25 +37,30 @@ function Build-AtomicParsleyParameterList {
                     
                         $propertyName = $_
                         $parameterName, $dataType = Find-ParameterFromPropertyName -n $propertyName -d
-                        $propertyValue = switch ( $dataType ) {
-                            "string"         { '"' + ($Atoms[$propertyName]).Replace('"','""') + '"'     }
-                            "url"            { '"' + $Atoms[$propertyName] + '"'                         }
-                            "numberOfnumber" { $Atoms[$propertyName].Replace(' of ','/').Replace(' ','') }
-                            "datetime"       { $Atoms[$propertyName].Replace(' ','T')                    }
-                            default          { $Atoms[$propertyName]                                     }
-                        }
+                        
+                        if ( $dataType -ne 'WriteNotSupported' ) {
 
-                        if ( $parameterName.StartsWith('name=') ) {
-                            $parameter = '--rDNSatom ' + $propertyValue + ' ' + $parameterName
-                        }
-                        elseif ( $parameterName -eq 'artwork' ) {
-                            $parameter   = '--artwork REMOVE_ALL --artwork ' + $propertyValue
-                        }
-                        else {
-                            $parameter = '--' + $parameterName + ' ' + $propertyValue
-                        }
+                            $propertyValue = switch ( $dataType ) {
+                                "string"         { '"' + ($Atoms[$propertyName]).Replace('"','""') + '"'     }
+                                "url"            { '"' + $Atoms[$propertyName] + '"'                         }
+                                "numberOfnumber" { $Atoms[$propertyName].Replace(' of ','/').Replace(' ','') }
+                                "datetime"       { $Atoms[$propertyName].Replace(' ','T')                    }
+                                default          { $Atoms[$propertyName]                                     }
+                            }
 
-                        $parameters += $parameter
+                            if ( $parameterName.StartsWith('name=') ) {
+                                $parameter = '--rDNSatom ' + $propertyValue + ' ' + $parameterName
+                            }
+                            elseif ( $parameterName -eq 'artwork' ) {
+                                $parameter   = '--artwork REMOVE_ALL --artwork ' + $propertyValue
+                            }
+                            else {
+                                $parameter = '--' + $parameterName + ' ' + $propertyValue
+                            }
+
+                            $parameters += $parameter
+                        
+                        }
 
                     }
 
