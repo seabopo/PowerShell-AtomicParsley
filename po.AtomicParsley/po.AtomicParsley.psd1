@@ -12,7 +12,7 @@
 RootModule = 'po.AtomicParsley.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5.5'
+ModuleVersion = '0.5.6'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core', 'Desktop')
@@ -69,7 +69,7 @@ PowerShellVersion = '7.4.0'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @('Read-AtomicParsleyAtoms', 'Write-AtomicParsleyAtoms')
+FunctionsToExport = @('Invoke-AtomicParsleyCommand','Read-AtomicParsleyAtoms', 'Write-AtomicParsleyAtoms')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 # CmdletsToExport = '*'
