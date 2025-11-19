@@ -4,7 +4,7 @@ description,desc,moov.udta.meta.ilst,string,description,TRUE
 longDescription,ldes,moov.udta.meta.ilst,string,longdesc,TRUE
 genre,©gen,moov.udta.meta.ilst,string,genre,TRUE
 iTunesGenre,geID,moov.udta.meta.ilst,number,geID,TRUE
-releaseDate,©day,moov.udta.meta.ilst,number,year,TRUE
+releaseDate,©day,moov.udta.meta.ilst,datetime,year,TRUE
 contentRating,iTunEXTC,com.apple.iTunes,string,contentRating,TRUE
 iTunesMovie,iTunMOVI,com.apple.iTunes,string,,TRUE
 tvShowName,tvsh,moov.udta.meta.ilst,string,TVShowName,TRUE

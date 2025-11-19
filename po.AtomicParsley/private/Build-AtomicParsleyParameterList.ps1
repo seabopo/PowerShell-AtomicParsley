@@ -44,7 +44,7 @@ function Build-AtomicParsleyParameterList {
                                 "string"         { '"' + ($Atoms[$propertyName]).Replace('"','""') + '"'     }
                                 "url"            { '"' + $Atoms[$propertyName] + '"'                         }
                                 "numberOfnumber" { $Atoms[$propertyName].Replace(' of ','/').Replace(' ','') }
-                                "datetime"       { $Atoms[$propertyName].Replace(' ','T')                    }
+                                "datetime"       { '"' + $(ConvertTo-UTCstring($Atoms[$propertyName])) + '"' }
                                 default          { $Atoms[$propertyName]                                     }
                             }
 
@@ -78,3 +78,6 @@ function Build-AtomicParsleyParameterList {
     }
     
 }
+
+
+
