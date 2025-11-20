@@ -58,3 +58,9 @@ encodedBy,©enc,moov.udta.meta.ilst,string,encodedBy,TRUE
 artistID,atID,moov.udta.meta.ilst,number,,FALSE
 playListID,plID,moov.udta.meta.ilst,number,,FALSE
 cameraID,cmID,moov.udta.meta.ilst,number,,FALSE
+ATVpEpisodeID,ATVpID,com.apple.iTunes,string,,TRUE
+ATVpSeriesID,ATVpSID,com.apple.iTunes,string,,TRUE
+TMdbEpisodeID,TMdbID,org.themoviedb,string,,TRUE
+TMdbSeriesID,TMdbSID,org.themoviedb,string,,TRUE
+TVdbEpisodeID,TVdbID,com.thetvdb,string,,TRUE
+TVdbSeriesID,TVdbSID,com.thetvdb,string,,TRUE
