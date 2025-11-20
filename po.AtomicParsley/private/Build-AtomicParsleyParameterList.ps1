@@ -35,6 +35,7 @@ function Build-AtomicParsleyParameterList {
                 $Atoms.Keys | Where-Object { $_ -notin $ignoreList } | 
                     ForEach-Object {
                     
+                        $parameter = $null
                         $propertyName = $_
                         $parameterName, $dataType = Find-ParameterFromPropertyName -n $propertyName -d
                         
@@ -49,16 +50,23 @@ function Build-AtomicParsleyParameterList {
                             }
 
                             if ( $parameterName.StartsWith('name=') ) {
-                                $parameter = '--rDNSatom ' + $propertyValue + ' ' + $parameterName
+                                if ( $parameterName -like "* domain=com.apple.iTunes" ) {
+                                    $parameter = '--rDNSatom ' + $propertyValue + ' ' + $parameterName
+                                } else {
+                                    $parameter = '--rDNSatom ' + '""' + ' ' + $parameterName + ' ' +
+                                                 '--rDNSatom ' + $propertyValue + ' ' + $parameterName
+                                }
                             }
                             elseif ( $parameterName -eq 'artwork' ) {
-                                $parameter   = '--artwork REMOVE_ALL --artwork ' + $propertyValue
+                                if ( $propertyValue -notlike "*piece*of artwork*" ) {
+                                    $parameter = '--artwork REMOVE_ALL --artwork ' + $propertyValue
+                                }
                             }
                             else {
                                 $parameter = '--' + $parameterName + ' ' + $propertyValue
                             }
 
-                            $parameters += $parameter
+                            if ( $null -ne $parameter ) { $parameters += $parameter }
                         
                         }
 
