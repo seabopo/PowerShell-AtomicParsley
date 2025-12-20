@@ -42,7 +42,7 @@ function Build-AtomicParsleyParameterList {
                         if ( $dataType -ne 'WriteNotSupported' ) {
 
                             $propertyValue = switch ( $dataType ) {
-                                "string"         { '"' + ($Atoms[$propertyName]).Replace('"','""') + '"'     }
+                                "string"         { '"' + ($Atoms[$propertyName]).Replace('"','""').Replace('$','`$') + '"'     }
                                 "url"            { '"' + $Atoms[$propertyName] + '"'                         }
                                 "numberOfnumber" { $Atoms[$propertyName].Replace(' of ','/').Replace(' ','') }
                                 "datetime"       { '"' + $(ConvertTo-UTCstring($Atoms[$propertyName])) + '"' }
