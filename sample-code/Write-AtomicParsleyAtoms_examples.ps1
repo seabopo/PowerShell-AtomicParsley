@@ -25,7 +25,7 @@ using namespace System.Collections.Specialized
 # Repo Movie Test for MacOS
 #---------------------------
 
-    $testFileName = 'Movies/Abominable (2019) [1080p WS iTunes+ HD DD].m4v'
+    $testFileName = '/Movies/Abominable (2019) [1080p WS iTunes+ HD DD].m4v'
     $testFilePath = Join-Path -Path $mediaPath -ChildPath $testFileName
 
     Write-Msg -p -fw -ps -m $( 'Processing SOURCE file: {0}' -f $file.Name )
@@ -57,25 +57,33 @@ using namespace System.Collections.Specialized
             Write-Msg -s -il 1 -m $( 'Test File Found: {0}' -f $targetPath )
         }
 
-        $newAtoms = [Hashtable]@{
-            title         = 'Abominable (2019)'
-            mediaType     = 'Movie'
-            artist        = 'Jill Culton'
-            contentRating = 'PG'
-            description   = 'Mischievous friends Yi (Chloe Bennet), Jin, and Peng discover a young yeti on their roof.'
-            genre         = 'Kids & Family'
-            hdVideo       = '2'
-            releaseDate   = '2019-09-27T07:00:00Z'
-            flavor        = '18:1080p'
-        }
+        # $newAtoms = [Hashtable]@{
+        #     title         = 'Abominable (2019)'
+        #     mediaType     = 'Movie'
+        #     artist        = 'Jill Culton'
+        #     contentRating = 'PG'
+        #     description   = 'Mischievous friends Yi (Chloe Bennet), Jin, and Peng discover a young yeti on their roof.'
+        #     genre         = 'Kids & Family'
+        #     hdVideo       = '2'
+        #     releaseDate   = '2019-09-27T07:00:00Z'
+        #     flavor        = '18:1080p'
+        # }
+
+        $nAtoms = $(Read-AtomicParsleyAtoms -File $testFilePath).value
+        $nAtoms.iTunesMovieCast          += 'Test Name'
+        $nAtoms.iTunesMovieCoDirectors   += 'Test Name'
+        $nAtoms.iTunesMovieDirectors     += 'Test Name'
+        $nAtoms.iTunesMovieProducers     += 'Test Name'
+        $nAtoms.iTunesMovieScreenwriters += 'Test Name'
+        $nAtoms.iTunesMovieStudio        += ',Test Studio'
 
         Write-Msg -p -fw -ps -m $( 'Atoms to write to file:' )
-        $newAtoms.keys | Sort-Object | ForEach-Object {
-            Write-Msg -a -il 1 -m $( '{0}: {1}' -f $_, $newAtoms[$_] )
+        $nAtoms.keys | Sort-Object | ForEach-Object {
+            Write-Msg -a -il 1 -m $( '{0}: {1}' -f $_, $nAtoms[$_] )
         }
 
         Write-Msg -p -fw -ps -m $( 'Cleaning TEST file and writing atoms ...' )
-        $r = Write-AtomicParsleyAtoms -File $targetPath -Atoms $newAtoms #-RemoveAll
+        $r = Write-AtomicParsleyAtoms -File $targetPath -Atoms $nAtoms #-RemoveAll
         Write-Msg -d -il 2 -m $( 'Complete.' )
         if ( -not $r.success ) {
             Write-Msg -e -m $r.message
@@ -86,12 +94,12 @@ using namespace System.Collections.Specialized
         $r = Read-AtomicParsleyAtoms -File $targetPath # -SaveToFile
         Write-Msg -d -il 2 -m $( 'Complete.' )
         if ( $r.success ) {
-            $testAtoms = $r.value
-            $testAtoms.remove('RawAtomData') | Out-Null
-            $testAtoms.remove('coverArt') | Out-Null
+            $tAtoms = $r.value
+            $tAtoms.remove('RawAtomData') | Out-Null
+            $tAtoms.remove('coverArt') | Out-Null
             Write-Msg -p -fw -ps -m $( 'TEST File Atoms:' )
-            $testAtoms.keys | Sort-Object | ForEach-Object {
-                Write-Msg -a -il 1 -m $( '{0}: {1}' -f $_, $testAtoms[$_] )
+            $tAtoms.keys | Sort-Object | ForEach-Object {
+                Write-Msg -a -il 1 -m $( '{0}: {1}' -f $_, $tAtoms[$_] )
             }
         }
 

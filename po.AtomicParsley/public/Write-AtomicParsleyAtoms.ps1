@@ -49,7 +49,9 @@ function Write-AtomicParsleyAtoms {
 
             if ( $r.success -and $null -ne $Atoms ) {
 
-                $Atoms.Keys | Where-Object { $_ -like @("iTunesMovie*") } |
+                $Atoms.iTunesMovie = Build-iTunesMovieXML -a $Atoms
+                
+                $Atoms.Keys | Where-Object { $_ -like "iTunesMovie*" -and $_ -ne 'iTunesMovie' } |
                               ForEach-Object { $ignoreList += $_.ToString() }
 
                 $parameters = Build-AtomicParsleyParameterList -Atoms $Atoms -IgnoreList $ignoreList
