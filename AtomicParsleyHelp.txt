@@ -1,4 +1,25 @@
 ====================================================================================================
+NOTICE
+====================================================================================================
+
+The help text below is the output of the AtomicParsley command-line program (--help, --longhelp
+and related options), captured for reference. It is reproduced verbatim from AtomicParsley and is
+not covered by this repository's MIT license.
+
+AtomicParsley is GPL software; you can freely distribute, redistribute, modify & use under the
+terms of the GNU General Public License; either version 2 or its successor.
+
+AtomicParsley is distributed under the GPL "AS IS", without any warranty; without the implied
+warranty of merchantability or fitness for either an expressed or implied particular purpose.
+
+Copyright (C) 2005-2007, puck_lock
+Copyright (C) 2009-2012, Wez Furlong
+with contributions from others; see ATOMICPARSLEY_LICENSE for the full list of copyright holders
+and the text of the GNU General Public License, version 2.
+
+Source code: https://github.com/wez/atomicparsley
+
+====================================================================================================
 AtomicParsley Help (--help)
 ====================================================================================================
 
