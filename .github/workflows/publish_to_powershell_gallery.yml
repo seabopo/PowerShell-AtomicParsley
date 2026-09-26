@@ -1,0 +1,38 @@
+
+name: Publish Module to PowerShell Gallery
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+
+  publishModule:
+    name: Publish PowerShell Module to the PowerShell Gallery
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Verify release tag matches module version
+        if: github.event_name == 'release'
+        shell: pwsh
+        run: |
+          $manifest = Import-PowerShellDataFile -Path ./po.AtomicParsley/po.AtomicParsley.psd1
+          $tagVersion = $env:RELEASE_TAG.TrimStart('v')
+          if ( $tagVersion -ne $manifest.ModuleVersion ) {
+              throw "Release tag '$env:RELEASE_TAG' does not match ModuleVersion '$($manifest.ModuleVersion)'."
+          }
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+      - name: Install and import dependencies
+        shell: pwsh
+        run: |
+          Install-PSResource -Name po.Toolkit -Repository PSGallery -Scope CurrentUser -TrustRepository
+          Import-Module -Name po.Toolkit -Force
+          Import-Module -Name ./po.AtomicParsley/po.AtomicParsley.psd1 -Force
+      - name: Publish to PowerShell Gallery
+        shell: pwsh
+        run: Publish-PSResource -Path ./po.AtomicParsley -Repository PSGallery -ApiKey $env:PSGALLERY_API_KEY -Verbose
+        env:
+          PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}

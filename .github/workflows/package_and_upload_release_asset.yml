@@ -1,0 +1,25 @@
+
+name: Package and Upload Release Asset
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+
+  packageModule:
+    name: Package and Upload PowerShell Module Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Zip artifact for deployment
+        run: zip po.AtomicParsley_$RELEASE_TAG.zip ./po.AtomicParsley/* -r
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: po.AtomicParsley_${{ github.event.release.tag_name }}.zip
+          github_token: ${{ secrets.GITHUB_TOKEN }}
