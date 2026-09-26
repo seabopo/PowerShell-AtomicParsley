@@ -371,8 +371,6 @@ or
 $atoms.MyProperty = 862
 ```
 
-
-
 ## Installing the PowerShell Module
 
 ### PowerShell Requirements
